@@ -1,0 +1,8 @@
+# - Configuration file for the E_GUI library
+# It defines the target "E_GUI".
+#
+
+@PACKAGE_INIT@
+
+# Import the exported targets
+include("@PACKAGE_CMAKE_INSTALL_CMAKECONFIGDIR@/E_GUITargets.cmake")
