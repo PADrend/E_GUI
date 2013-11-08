@@ -111,7 +111,7 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 	ES_MFUNCTION(typeObject,GUI_Manager,"createImage",1,3,{
 		E_Util::E_Bitmap *eb=parameter[0].toType<E_Util::E_Bitmap>();
 		if(eb){
-			return EScript::create(thisObj->createImage( (**eb).get(),parameter[1].to<uint32_t>(rt)));
+			return EScript::create(thisObj->createImage( *(**eb).get(),parameter[1].to<uint32_t>(rt)));
 		}
 		return EScript::create(
 				thisObj->createImage( Geometry::Rect(0,0,parameter[0].to<float>(rt),parameter[1].to<float>(rt)), parameter[2].to<uint32_t>(rt,0) ) );

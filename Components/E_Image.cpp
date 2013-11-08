@@ -49,7 +49,7 @@ void E_Image::init(EScript::Namespace & lib) {
 	ES_MFUN(typeObject,const Image,"getImageWidth", 0, 0, 	(thisObj->getBitmap()->getWidth()))
 
 	//! [ESMF] self Image.updateData(_Bitmap )
-	ES_MFUN(typeObject,Image,"updateData",1,1,				(thisObj->updateData(parameter[0].to<Util::Bitmap*>(rt)),thisEObj))
+	ES_MFUN(typeObject,Image,"updateData",1,1,				(thisObj->updateData(parameter[0].to<Util::Bitmap &>(rt)),thisEObj))
 	
 }
 
