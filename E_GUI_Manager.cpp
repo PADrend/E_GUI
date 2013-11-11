@@ -109,12 +109,15 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 
 	//! [ESMF] GUI_Manager.createImage( (w,h[,flags]) | Bitmap )
 	ES_MFUNCTION(typeObject,GUI_Manager,"createImage",1,3,{
-		E_Util::E_Bitmap *eb=parameter[0].toType<E_Util::E_Bitmap>();
-		if(eb){
-			return EScript::create(thisObj->createImage( *(**eb).get(),parameter[1].to<uint32_t>(rt)));
+		if(parameter.count() > 1) {
+			return EScript::create(thisObj->createImage(Geometry::Rect(0,
+																	   0,
+																	   parameter[0].to<float>(rt),
+																	   parameter[1].to<float>(rt)), 
+														parameter[2].to<uint32_t>(rt, 0)));
 		}
-		return EScript::create(
-				thisObj->createImage( Geometry::Rect(0,0,parameter[0].to<float>(rt),parameter[1].to<float>(rt)), parameter[2].to<uint32_t>(rt,0) ) );
+		return EScript::create(thisObj->createImage(parameter[0].to<Util::Bitmap &>(rt), 
+													parameter[1].to<uint32_t>(rt)));
 	})
 
 	//! [ESMF] GUI_Manager.createHSplitter([flags])
