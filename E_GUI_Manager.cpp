@@ -306,7 +306,7 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 				(thisObj->setDefaultShape(parameter[0].toUInt(),parameter[1].to<AbstractShape*>(rt)),thisEObj))
     
     ES_MFUN(typeObject,GUI_Manager, "registerMouseCursor", 4, 4,
-                 (thisObj->registerMouseCursor(parameter[0].toString(), parameter[1].to<Util::Bitmap*>(rt), parameter[2].to<uint32_t>(rt), parameter[3].to<uint32_t>(rt)),thisEObj))
+                 (thisObj->registerMouseCursor(parameter[0].toString(), parameter[1].to<Util::Reference<Util::Bitmap>>(rt), parameter[2].to<uint32_t>(rt), parameter[3].to<uint32_t>(rt)),thisEObj))
     
 	//! [ESMF] self GUI_Manager.setGlobalValue(Number id,Number)
 	ES_MFUN(typeObject,GUI_Manager,"setGlobalValue",2,2,

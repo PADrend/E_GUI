@@ -34,7 +34,7 @@ void E_ImageData::init(EScript::Namespace & lib) {
 	using namespace GUI;
 	
 	//! [ESF] new ImageData(Util::Bitmap)
-	ES_CTOR(typeObject,1,1,									EScript::create(new GUI::ImageData(parameter[0].to<Util::Bitmap*>(rt) )))
+	ES_CTOR(typeObject,1,1,									EScript::create(new GUI::ImageData(parameter[0].to<Util::Reference<Util::Bitmap>>(rt) )))
 
 	//! [ESMF] RESULT ImageData.createPixelAccessor()
 	ES_MFUN(typeObject,ImageData,"createPixelAccessor",0,0,	EScript::create(thisObj->createPixelAccessor()))
