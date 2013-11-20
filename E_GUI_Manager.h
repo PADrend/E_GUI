@@ -14,6 +14,7 @@
 #include <GUI/GUI_Manager.h>
 #include <EScript/Objects/ExtObject.h>
 #include <GUI/Base/Listener.h>
+#include <memory>
 
 namespace Util {
 namespace UI {
@@ -79,7 +80,7 @@ class E_GUI_Manager : public EScript::ExtObject{
 		EScript::Object * clone() const override;
 
 	protected:
-		Util::Reference<GUI::GUI_Manager> manager;
+		std::unique_ptr<GUI::GUI_Manager> manager;
 		EScript_EventHandler myEventHandler;
 };
 }
