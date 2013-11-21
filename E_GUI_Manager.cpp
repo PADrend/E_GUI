@@ -152,12 +152,12 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 
 	//! [ESMF] GUI_Manager.createPanel( [w,h,[,flags]] | [flags] )
 	ES_MFUNCTION(typeObject,GUI_Manager,"createPanel",0,3,{
-		if(parameter.count()<2){
-			return EScript::create(thisObj->createPanel(parameter.count()>0?parameter[0].to<uint32_t>(rt):0));
+		if(parameter.count() < 2) {
+			return EScript::create(thisObj->createPanel(parameter[0].to<uint32_t>(rt, 0)));
 		}
-		return EScript::create(thisObj->createPanel(
-			Geometry::Rect(0,0,parameter[0].to<float>(rt),parameter[1].to<float>(rt)),
-			parameter[2].to<uint32_t>(rt)));
+		auto panel = thisObj->createPanel(parameter[2].to<uint32_t>(rt));
+		panel->setRect(Geometry::Rect(0, 0, parameter[0].to<float>(rt), parameter[1].to<float>(rt)));
+		return EScript::create(panel);
 	})
 
 	//! [ESMF] GUI_Manager.createSlider(w,h,min,max,[steps,[flags]])
