@@ -177,9 +177,9 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 
 	//! [ESMF] GUI_Manager.createTabbedPanel([w,h,[flags]])
 	ES_MFUNCTION(typeObject,GUI_Manager,"createTabbedPanel",0,3,{
-		return EScript::create(thisObj->createTabbedPanel(
-			Geometry::Rect(0,0,parameter[0].toFloat(10),parameter[1].toFloat(10)),
-				parameter[2].to<uint32_t>(rt,0)));
+		auto tabbedPanel = thisObj->createTabbedPanel(parameter[2].to<uint32_t>(rt, 0));
+		tabbedPanel->setRect(Geometry::Rect(0, 0, parameter[0].toFloat(10), parameter[1].toFloat(10)));
+		return EScript::create(tabbedPanel);
 	})
 
 	//! [ESMF] GUI_Manager.createTextarea([text[,flags]])
