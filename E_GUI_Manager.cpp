@@ -523,10 +523,7 @@ E_GUI_Manager::E_GUI_Manager(Util::UI::EventContext & eventContext, EScript::Run
 }
 
 //! (dtor)
-E_GUI_Manager::~E_GUI_Manager() {
-	// FIXME: See ticket #316.
-	//delete manager;
-}
+E_GUI_Manager::~E_GUI_Manager() = default;
 
 //! ---|> Object
 EScript::Object * E_GUI_Manager::clone()const {
