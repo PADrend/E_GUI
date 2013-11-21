@@ -188,9 +188,9 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 
 	//! [ESMF] GUI_Manager.createTextfield(w,h,[text[,flags]])
 	ES_MFUNCTION(typeObject,GUI_Manager,"createTextfield",2,4,{
-		return EScript::create(thisObj->createTextfield(
-			Geometry::Rect(0,0,parameter[0].to<float>(rt),parameter[1].to<float>(rt)),
-			parameter[2].toString(""),parameter[3].to<uint32_t>(rt,0)));
+		auto textField = thisObj->createTextfield(parameter[2].toString(""), parameter[3].to<uint32_t>(rt, 0));
+		textField->setRect(Geometry::Rect(0, 0, parameter[0].to<float>(rt), parameter[1].to<float>(rt)));
+		return EScript::create(textField);
 	})
 
 	declareConstant(typeObject,"createTextField",typeObject->getAttribute("createTextfield").getValue()); //! \deprecated
