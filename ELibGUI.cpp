@@ -146,6 +146,7 @@ void init(EScript::Namespace * globals) {
 	declareConstant(lib,"AUTO_LAYOUT",new EScript::Number(GUI::Panel::AUTO_LAYOUT));
 	/// Slider
 	declareConstant(lib,"SHOW_VALUE",new EScript::Number(GUI::Slider::SHOW_VALUE));
+	declareConstant(lib,"SLIDER_BUTTONS",new EScript::Number(GUI::Slider::SLIDER_BUTTONS));
 	/// TreeView::TreeViewEntry
 	declareConstant(lib,"COLLAPSED_ENTRY",new EScript::Number(GUI::TreeView::TreeViewEntry::COLLAPSED_ENTRY));
 	/// Window
