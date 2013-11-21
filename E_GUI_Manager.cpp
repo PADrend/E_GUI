@@ -59,12 +59,6 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 		return thisEObj;
 	})
 
-	//! [ESMF] void GUI_Manager.addKeyListener(Component)
-	ES_MFUNCTION(typeObject,E_GUI_Manager,"addKeyListener",1,1,{
-		parameter[0].to<GUI::Component*>(rt)->addKeyListener(thisObj->getEScriptEventHandler());
-		return thisEObj;
-	})
-
 	//! [ESMF] self GUI_Manager.closeAllMenus()
 	ES_MFUN(typeObject,GUI_Manager,"closeAllMenus",0,0,(thisObj->closeAllMenus(),thisEObj))
 
