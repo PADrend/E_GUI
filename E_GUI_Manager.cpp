@@ -32,6 +32,7 @@
 #include <E_Util/UI/E_EventContext.h>
 #include <E_Util/UI/E_Window.h>
 #include <Util/UI/Event.h>
+#include <functional>
 
 namespace E_GUI {
 
@@ -376,13 +377,26 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 
 // -------------------------------------------------------------------------
 
+EScript_EventHandler::EScript_EventHandler(EScript::Runtime & _rt, E_GUI_Manager & _eManager) : 
+	rt(_rt), 
+	eManager(_eManager),
+	actionListenerHandle(eManager.getGUI_Manager().addActionListener(std::bind(&EScript_EventHandler::handleAction, 
+																	 this, 
+																	 std::placeholders::_1, 
+																	 std::placeholders::_2))) {
+}
+
+EScript_EventHandler::~EScript_EventHandler() {
+	eManager.getGUI_Manager().removeActionListener(std::move(actionListenerHandle));
+}
+
 //! ---|> ActionListener
-GUI::listenerResult_t EScript_EventHandler::handleAction(GUI::Component * component,const Util::StringIdentifier & actionName) {
+bool EScript_EventHandler::handleAction(GUI::Component * component,const Util::StringIdentifier & actionName) {
 	EScript::ObjRef obj = EScript::create(component);
 	if (obj.isNull() ) {
 		std::cout << "No E_Component: "<<component<<"\n";
 		WARN(" ");
-		return GUI::LISTENER_EVENT_NOT_CONSUMED;
+		return false;
 	}
 	EScript::Object * handler = nullptr;
 	
@@ -401,13 +415,13 @@ GUI::listenerResult_t EScript_EventHandler::handleAction(GUI::Component * compon
 	}
 	
 	if(handler==nullptr)
-		return GUI::LISTENER_EVENT_NOT_CONSUMED;
+		return false;
 
 
 //std::cout << "actionName:"<< actionName.toString()<<"\n";
 
 	EScript::ObjRef resultObj = rt.executeFunction(handler, obj, EScript::ParameterValues());
-	return GUI::LISTENER_EVENT_CONSUMED;
+	return true;
 }
 
 //! ---|> DataChangeListener
@@ -514,7 +528,6 @@ bool EScript_EventHandler::onKeyEvent(GUI::Component * component, const Util::UI
 //! (ctor)
 E_GUI_Manager::E_GUI_Manager(Util::UI::EventContext & eventContext, EScript::Runtime & rt,EScript::Type * type):
 		ExtObject(type?type:typeObject),manager(new GUI::GUI_Manager(eventContext)),myEventHandler(rt,*this) {
-	manager->registerActionListener(&myEventHandler);
 	manager->registerDataChangeListener(&myEventHandler);
 	manager->addMouseMotionListener(&myEventHandler);
 	manager->addMouseButtonListener(&myEventHandler);
