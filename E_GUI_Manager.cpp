@@ -381,16 +381,19 @@ EScript_EventHandler::EScript_EventHandler(EScript::Runtime & _rt, E_GUI_Manager
 	rt(_rt), 
 	eManager(_eManager),
 	actionListenerHandle(eManager.getGUI_Manager().addActionListener(std::bind(&EScript_EventHandler::handleAction, 
-																	 this, 
-																	 std::placeholders::_1, 
-																	 std::placeholders::_2))) {
+																			   this, 
+																			   std::placeholders::_1, 
+																			   std::placeholders::_2))),
+	dataChangeListenerHandle(eManager.getGUI_Manager().addGlobalDataChangeListener(std::bind(&EScript_EventHandler::handleDataChange, 
+																							 this, 
+																							 std::placeholders::_1))) {
 }
 
 EScript_EventHandler::~EScript_EventHandler() {
+	eManager.getGUI_Manager().removeGlobalDataChangeListener(std::move(dataChangeListenerHandle));
 	eManager.getGUI_Manager().removeActionListener(std::move(actionListenerHandle));
 }
 
-//! ---|> ActionListener
 bool EScript_EventHandler::handleAction(GUI::Component * component,const Util::StringIdentifier & actionName) {
 	EScript::ObjRef obj = EScript::create(component);
 	if (obj.isNull() ) {
@@ -424,8 +427,7 @@ bool EScript_EventHandler::handleAction(GUI::Component * component,const Util::S
 	return true;
 }
 
-//! ---|> DataChangeListener
-void EScript_EventHandler::handleDataChange(GUI::Component * component,const Util::StringIdentifier & /*actionName*/) {
+void EScript_EventHandler::handleDataChange(GUI::Component * component) {
 	EScript::ObjRef obj = EScript::create(component);
 	if (obj.isNull()) {
 		WARN(" ");
@@ -528,7 +530,6 @@ bool EScript_EventHandler::onKeyEvent(GUI::Component * component, const Util::UI
 //! (ctor)
 E_GUI_Manager::E_GUI_Manager(Util::UI::EventContext & eventContext, EScript::Runtime & rt,EScript::Type * type):
 		ExtObject(type?type:typeObject),manager(new GUI::GUI_Manager(eventContext)),myEventHandler(rt,*this) {
-	manager->registerDataChangeListener(&myEventHandler);
 	manager->addMouseMotionListener(&myEventHandler);
 	manager->addMouseButtonListener(&myEventHandler);
 
