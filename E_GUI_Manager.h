@@ -30,8 +30,7 @@ class E_GUI_Manager;
  *   [EScript_EventHandler]    ---|> [ActionListener]
  *                             ---|> [DataChangeListener]
  */
-class EScript_EventHandler:
-			public GUI::MouseMotionListener {
+class EScript_EventHandler {
 	public:
 		EScript_EventHandler(EScript::Runtime & _rt, E_GUI_Manager & _eManager);
 		virtual ~EScript_EventHandler();
@@ -41,8 +40,8 @@ class EScript_EventHandler:
 		void handleDataChange(GUI::Component * component);
 
 		bool onMouseButton(GUI::Component * component, const Util::UI::ButtonEvent & buttonEvent);
-		// ---|> MouseMotionListener
-		GUI::listenerResult_t onMouseMove(GUI::Component * component, const Util::UI::MotionEvent & motionEvent) override;
+
+		GUI::listenerResult_t onMouseMove(GUI::Component * component, const Util::UI::MotionEvent & motionEvent);
 
 		bool onKeyEvent(GUI::Component * component, const Util::UI::KeyboardEvent & keyEvent);
 
@@ -52,6 +51,7 @@ class EScript_EventHandler:
 		GUI::GUI_Manager::ActionListenerHandle actionListenerHandle;
 		GUI::GUI_Manager::DataChangeListenerHandle dataChangeListenerHandle;
 		GUI::GUI_Manager::MouseButtonListenerHandle mouseButtonListenerHandle;
+		GUI::GUI_Manager::MouseMotionListenerHandle mouseMotionListenerHandle;
 };
 
 /**
