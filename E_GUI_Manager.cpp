@@ -38,58 +38,46 @@ namespace E_GUI {
 
 EScript::Type* E_GUI_Manager::typeObject=nullptr;
 
-class E_GUI_Manager_EventHandler {
-	private:
-		EScript::Runtime & rt;
-		E_GUI_Manager & eManager;
-		GUI::ActionListenerHandle actionListenerHandle;
-		GUI::DataChangeListenerHandle dataChangeListenerHandle;
-		GUI::MouseButtonListenerHandle mouseButtonListenerHandle;
-		GUI::MouseMotionListenerHandle mouseMotionListenerHandle;
+struct E_GUI_Manager_EventHandler {
+	EScript::Runtime & rt;
+	E_GUI_Manager & eManager;
+	GUI::ActionListenerHandle actionListenerHandle;
+	GUI::DataChangeListenerHandle dataChangeListenerHandle;
+	GUI::MouseButtonListenerHandle mouseButtonListenerHandle;
+	GUI::MouseMotionListenerHandle mouseMotionListenerHandle;
 
-	public:
-		E_GUI_Manager_EventHandler(EScript::Runtime & _rt, E_GUI_Manager & _eManager) : 
-			rt(_rt), 
-			eManager(_eManager),
-			actionListenerHandle(eManager.getGUI_Manager().addActionListener(std::bind(&E_GUI_Manager_EventHandler::handleAction, 
-																					this, 
-																					std::placeholders::_1, 
-																					std::placeholders::_2))),
-			dataChangeListenerHandle(eManager.getGUI_Manager().addGlobalDataChangeListener(std::bind(&E_GUI_Manager_EventHandler::handleDataChange, 
-																									this, 
-																									std::placeholders::_1))),
-			mouseButtonListenerHandle(eManager.getGUI_Manager().addGlobalMouseButtonListener(std::bind(&E_GUI_Manager_EventHandler::onMouseButton, 
-																									this, 
-																									std::placeholders::_1,
-																									std::placeholders::_2))),
-			mouseMotionListenerHandle(eManager.getGUI_Manager().addGlobalMouseMotionListener(std::bind(&E_GUI_Manager_EventHandler::onMouseMove, 
-																									this, 
-																									std::placeholders::_1,
-																									std::placeholders::_2))){
-		}
+	E_GUI_Manager_EventHandler(EScript::Runtime & _rt, E_GUI_Manager & _eManager) : 
+		rt(_rt), 
+		eManager(_eManager),
+		actionListenerHandle(eManager.getGUI_Manager().addActionListener(std::bind(&E_GUI_Manager_EventHandler::handleAction, 
+																				this, 
+																				std::placeholders::_1, 
+																				std::placeholders::_2))),
+		dataChangeListenerHandle(eManager.getGUI_Manager().addGlobalDataChangeListener(std::bind(&E_GUI_Manager_EventHandler::handleDataChange, 
+																								this, 
+																								std::placeholders::_1))),
+		mouseButtonListenerHandle(eManager.getGUI_Manager().addGlobalMouseButtonListener(std::bind(&E_GUI_Manager_EventHandler::onMouseButton, 
+																								this, 
+																								std::placeholders::_1,
+																								std::placeholders::_2))),
+		mouseMotionListenerHandle(eManager.getGUI_Manager().addGlobalMouseMotionListener(std::bind(&E_GUI_Manager_EventHandler::onMouseMove, 
+																								this, 
+																								std::placeholders::_1,
+																								std::placeholders::_2))){
+	}
 
-		~E_GUI_Manager_EventHandler() {
-			eManager.getGUI_Manager().removeGlobalMouseMotionListener(std::move(mouseMotionListenerHandle));
-			eManager.getGUI_Manager().removeGlobalMouseButtonListener(std::move(mouseButtonListenerHandle));
-			eManager.getGUI_Manager().removeGlobalDataChangeListener(std::move(dataChangeListenerHandle));
-			eManager.getGUI_Manager().removeActionListener(std::move(actionListenerHandle));
-		}
+	~E_GUI_Manager_EventHandler() {
+		eManager.getGUI_Manager().removeGlobalMouseMotionListener(std::move(mouseMotionListenerHandle));
+		eManager.getGUI_Manager().removeGlobalMouseButtonListener(std::move(mouseButtonListenerHandle));
+		eManager.getGUI_Manager().removeGlobalDataChangeListener(std::move(dataChangeListenerHandle));
+		eManager.getGUI_Manager().removeActionListener(std::move(actionListenerHandle));
+	}
 
-	private:
-		bool handleAction(GUI::Component * component,const Util::StringIdentifier & actionName);
-
-		void handleDataChange(GUI::Component * component);
-
-	// FIXME
-	public:
-		bool onMouseButton(GUI::Component * component, const Util::UI::ButtonEvent & buttonEvent);
-
-	private:
-		bool onMouseMove(GUI::Component * component, const Util::UI::MotionEvent & motionEvent);
-
-		bool onKeyEvent(GUI::Component * component, const Util::UI::KeyboardEvent & keyEvent);
-
-
+	bool handleAction(GUI::Component * component,const Util::StringIdentifier & actionName);
+	void handleDataChange(GUI::Component * component);
+	bool onMouseButton(GUI::Component * component, const Util::UI::ButtonEvent & buttonEvent);
+	bool onMouseMove(GUI::Component * component, const Util::UI::MotionEvent & motionEvent);
+	bool onKeyEvent(GUI::Component * component, const Util::UI::KeyboardEvent & keyEvent);
 };
 
 // ----------------------------------------------------------------------
@@ -110,12 +98,20 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 
 	//! [ESMF] void GUI_Manager.enableMouseButtonListener(Component)
 	ES_MFUNCTION(typeObject, E_GUI_Manager, "enableMouseButtonListener", 1, 1, {
-		// TODO: Store handle somewhere
-		thisObj->getGUI_Manager().addMouseButtonListener(parameter[0].to<GUI::Component *>(rt), 
-														 std::bind(&E_GUI_Manager_EventHandler::onMouseButton,
-																   thisObj->getEventHandler(),
-																   std::placeholders::_1,
-																   std::placeholders::_2));
+		auto & gui = thisObj->getGUI_Manager();
+		auto component = parameter[0].to<GUI::Component *>(rt);
+		auto mouseButtonHandle = new GUI::MouseButtonListenerHandle(
+			gui.addMouseButtonListener(component,
+									   std::bind(&E_GUI_Manager_EventHandler::onMouseButton,
+												 thisObj->getEventHandler(),
+												 std::placeholders::_1,
+												 std::placeholders::_2)));
+		gui.addComponentDestructionListener(component,
+			[&gui, component, mouseButtonHandle]() {
+				gui.removeMouseButtonListener(component, std::move(*mouseButtonHandle));
+				delete mouseButtonHandle;
+			}
+		);
 		return thisEObj;
 	})
 

@@ -25,7 +25,7 @@ class EventContext;
 }
 
 namespace E_GUI{
-class E_GUI_Manager_EventHandler;
+struct E_GUI_Manager_EventHandler;
 
 /**
  *  EScript-Wrapper for GUI::GUI_Manager.
