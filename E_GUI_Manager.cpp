@@ -43,8 +43,8 @@ struct E_GUI_Manager_EventHandler {
 	E_GUI_Manager & eManager;
 	GUI::ActionListenerHandle actionListenerHandle;
 	GUI::DataChangeListenerHandle dataChangeListenerHandle;
-	GUI::MouseButtonListenerHandle mouseButtonListenerHandle;
-	GUI::MouseMotionListenerHandle mouseMotionListenerHandle;
+	GUI::MouseButtonListener mouseButtonListener;
+	GUI::MouseMotionListener mouseMotionListener;
 
 	E_GUI_Manager_EventHandler(EScript::Runtime & _rt, E_GUI_Manager & _eManager) : 
 		rt(_rt), 
@@ -56,19 +56,15 @@ struct E_GUI_Manager_EventHandler {
 		dataChangeListenerHandle(eManager.getGUI_Manager().addGlobalDataChangeListener(std::bind(&E_GUI_Manager_EventHandler::handleDataChange, 
 																								this, 
 																								std::placeholders::_1))),
-		mouseButtonListenerHandle(eManager.getGUI_Manager().addGlobalMouseButtonListener(std::bind(&E_GUI_Manager_EventHandler::onMouseButton, 
-																								this, 
-																								std::placeholders::_1,
-																								std::placeholders::_2))),
-		mouseMotionListenerHandle(eManager.getGUI_Manager().addGlobalMouseMotionListener(std::bind(&E_GUI_Manager_EventHandler::onMouseMove, 
-																								this, 
-																								std::placeholders::_1,
-																								std::placeholders::_2))){
+		mouseButtonListener(GUI::createGlobalMouseButtonListener(eManager.getGUI_Manager(), 
+																 std::bind(&E_GUI_Manager_EventHandler::onMouseButton, 
+																		   this, 
+																		   std::placeholders::_1,
+																		   std::placeholders::_2))),
+		mouseMotionListener(GUI::createMouseMotionListener(eManager.getGUI_Manager(), this, &E_GUI_Manager_EventHandler::onMouseMove)) {
 	}
 
 	~E_GUI_Manager_EventHandler() {
-		eManager.getGUI_Manager().removeGlobalMouseMotionListener(std::move(mouseMotionListenerHandle));
-		eManager.getGUI_Manager().removeGlobalMouseButtonListener(std::move(mouseButtonListenerHandle));
 		eManager.getGUI_Manager().removeGlobalDataChangeListener(std::move(dataChangeListenerHandle));
 		eManager.getGUI_Manager().removeActionListener(std::move(actionListenerHandle));
 	}
