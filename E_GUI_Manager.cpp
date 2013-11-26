@@ -218,7 +218,7 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 
 		return EScript::create(thisObj->createSlider(
 			Geometry::Rect(0,0,parameter[0].to<float>(rt),parameter[1].to<float>(rt)),
-			min,max,steps,"",parameter[5].to<uint32_t>(rt,0)));
+			min,max,steps,parameter[5].to<uint32_t>(rt,0)));
 	})
 
 	//! [ESMF] GUI_Manager.createTab(title,clientArea)
