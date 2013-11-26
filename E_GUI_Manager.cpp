@@ -31,6 +31,7 @@
 #include <E_Util/UI/E_Event.h>
 #include <E_Util/UI/E_EventContext.h>
 #include <E_Util/UI/E_Window.h>
+#include <Util/IO/FileName.h>
 #include <Util/UI/Event.h>
 #include <functional>
 
