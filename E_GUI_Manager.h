@@ -11,11 +11,12 @@
 #ifndef E_GUI_MANAGER_H
 #define E_GUI_MANAGER_H
 
-#include <GUI/GUI_Manager.h>
 #include <EScript/Objects/ExtObject.h>
-#include <GUI/Base/Listener.h>
 #include <memory>
 
+namespace GUI {
+class GUI_Manager;
+}
 namespace Util {
 namespace UI {
 union Event;
@@ -24,33 +25,7 @@ class EventContext;
 }
 
 namespace E_GUI{
-class E_GUI_Manager;
-
-/**
- *   [EScript_EventHandler]    ---|> [ActionListener]
- *                             ---|> [DataChangeListener]
- */
-class EScript_EventHandler:
-			public GUI::ActionListener, public GUI::DataChangeListener,
-			public GUI::MouseButtonListener,public GUI::MouseMotionListener,
-			public GUI::KeyListener{
-	public:
-		EScript_EventHandler(EScript::Runtime & _rt,E_GUI_Manager & _eManager):rt(_rt),eManager(_eManager){};
-		// ---|> ActionListener
-		GUI::listenerResult_t handleAction(GUI::Component * component,const Util::StringIdentifier & actionName) override;
-		// ---|> DataChangeListener
-		void handleDataChange(GUI::Component *,const Util::StringIdentifier & actionName) override;
-		// ---|> MouseButtonListener
-		GUI::listenerResult_t onMouseButton(GUI::Component * component, const Util::UI::ButtonEvent & buttonEvent) override;
-		// ---|> MouseMotionListener
-		GUI::listenerResult_t onMouseMove(GUI::Component * component, const Util::UI::MotionEvent & motionEvent) override;
-		// ---|> KeyListener
-		bool onKeyEvent(GUI::Component * component, const Util::UI::KeyboardEvent & keyEvent) override;
-
-	private:
-		EScript::Runtime & rt;
-		E_GUI_Manager & eManager;
-};
+struct E_GUI_Manager_EventHandler;
 
 /**
  *  EScript-Wrapper for GUI::GUI_Manager.
@@ -59,7 +34,7 @@ class EScript_EventHandler:
  *      |
  *      ------> [GUI::GUI_Manager]
  */
-class E_GUI_Manager : public EScript::ExtObject{
+class E_GUI_Manager : public EScript::ExtObject {
 	ES_PROVIDES_TYPE_NAME(GUI_Manager)
 
 	public:
@@ -72,16 +47,16 @@ class E_GUI_Manager : public EScript::ExtObject{
 		const GUI::GUI_Manager & getGUI_Manager()const	{	return *manager.get();		}
 		GUI::GUI_Manager & getGUI_Manager()				{	return *manager.get();		}
 		bool handleEvent(const Util::UI::Event & event);
-		EScript_EventHandler * getEScriptEventHandler()	{	return &myEventHandler;	}
+		E_GUI_Manager_EventHandler * getEventHandler();
 		
 		const GUI::GUI_Manager* operator*()const		{	return manager.get();	}
 		GUI::GUI_Manager* operator*()					{	return manager.get();	}
 
 		EScript::Object * clone() const override;
 
-	protected:
+	private:
 		std::unique_ptr<GUI::GUI_Manager> manager;
-		EScript_EventHandler myEventHandler;
+		std::unique_ptr<E_GUI_Manager_EventHandler> eventHandler;
 };
 }
 

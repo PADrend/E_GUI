@@ -32,10 +32,49 @@
 #include <E_Util/UI/E_EventContext.h>
 #include <E_Util/UI/E_Window.h>
 #include <Util/UI/Event.h>
+#include <functional>
 
 namespace E_GUI {
 
 EScript::Type* E_GUI_Manager::typeObject=nullptr;
+
+struct E_GUI_Manager_EventHandler {
+	EScript::Runtime & rt;
+	E_GUI_Manager & eManager;
+	GUI::ActionListenerHandle actionListenerHandle;
+	GUI::DataChangeListenerHandle dataChangeListenerHandle;
+	GUI::MouseButtonListener mouseButtonListener;
+	GUI::MouseMotionListener mouseMotionListener;
+
+	E_GUI_Manager_EventHandler(EScript::Runtime & _rt, E_GUI_Manager & _eManager) : 
+		rt(_rt), 
+		eManager(_eManager),
+		actionListenerHandle(eManager.getGUI_Manager().addActionListener(std::bind(&E_GUI_Manager_EventHandler::handleAction, 
+																				this, 
+																				std::placeholders::_1, 
+																				std::placeholders::_2))),
+		dataChangeListenerHandle(eManager.getGUI_Manager().addGlobalDataChangeListener(std::bind(&E_GUI_Manager_EventHandler::handleDataChange, 
+																								this, 
+																								std::placeholders::_1))),
+		mouseButtonListener(GUI::createGlobalMouseButtonListener(eManager.getGUI_Manager(), 
+																 std::bind(&E_GUI_Manager_EventHandler::onMouseButton, 
+																		   this, 
+																		   std::placeholders::_1,
+																		   std::placeholders::_2))),
+		mouseMotionListener(GUI::createMouseMotionListener(eManager.getGUI_Manager(), this, &E_GUI_Manager_EventHandler::onMouseMove)) {
+	}
+
+	~E_GUI_Manager_EventHandler() {
+		eManager.getGUI_Manager().removeGlobalDataChangeListener(std::move(dataChangeListenerHandle));
+		eManager.getGUI_Manager().removeActionListener(std::move(actionListenerHandle));
+	}
+
+	bool handleAction(GUI::Component * component,const Util::StringIdentifier & actionName);
+	void handleDataChange(GUI::Component * component);
+	bool onMouseButton(GUI::Component * component, const Util::UI::ButtonEvent & buttonEvent);
+	bool onMouseMove(GUI::Component * component, const Util::UI::MotionEvent & motionEvent);
+	bool onKeyEvent(GUI::Component * component, const Util::UI::KeyboardEvent & keyEvent);
+};
 
 // ----------------------------------------------------------------------
 
@@ -54,14 +93,21 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 	})
 
 	//! [ESMF] void GUI_Manager.enableMouseButtonListener(Component)
-	ES_MFUNCTION(typeObject,E_GUI_Manager,"enableMouseButtonListener",1,1,{
-		parameter[0].to<GUI::Component*>(rt)->addMouseButtonListener(thisObj->getEScriptEventHandler());
-		return thisEObj;
-	})
-
-	//! [ESMF] void GUI_Manager.addKeyListener(Component)
-	ES_MFUNCTION(typeObject,E_GUI_Manager,"addKeyListener",1,1,{
-		parameter[0].to<GUI::Component*>(rt)->addKeyListener(thisObj->getEScriptEventHandler());
+	ES_MFUNCTION(typeObject, E_GUI_Manager, "enableMouseButtonListener", 1, 1, {
+		auto & gui = thisObj->getGUI_Manager();
+		auto component = parameter[0].to<GUI::Component *>(rt);
+		auto mouseButtonHandle = new GUI::MouseButtonListenerHandle(
+			gui.addMouseButtonListener(component,
+									   std::bind(&E_GUI_Manager_EventHandler::onMouseButton,
+												 thisObj->getEventHandler(),
+												 std::placeholders::_1,
+												 std::placeholders::_2)));
+		gui.addComponentDestructionListener(component,
+			[&gui, component, mouseButtonHandle]() {
+				gui.removeMouseButtonListener(component, std::move(*mouseButtonHandle));
+				delete mouseButtonHandle;
+			}
+		);
 		return thisEObj;
 	})
 
@@ -168,7 +214,7 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 
 		return EScript::create(thisObj->createSlider(
 			Geometry::Rect(0,0,parameter[0].to<float>(rt),parameter[1].to<float>(rt)),
-			min,max,steps,"",parameter[5].to<uint32_t>(rt,0)));
+			min,max,steps,parameter[5].to<uint32_t>(rt,0)));
 	})
 
 	//! [ESMF] GUI_Manager.createTab(title,clientArea)
@@ -382,13 +428,12 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 
 // -------------------------------------------------------------------------
 
-//! ---|> ActionListener
-GUI::listenerResult_t EScript_EventHandler::handleAction(GUI::Component * component,const Util::StringIdentifier & actionName) {
+bool E_GUI_Manager_EventHandler::handleAction(GUI::Component * component,const Util::StringIdentifier & actionName) {
 	EScript::ObjRef obj = EScript::create(component);
 	if (obj.isNull() ) {
 		std::cout << "No E_Component: "<<component<<"\n";
 		WARN(" ");
-		return GUI::LISTENER_EVENT_NOT_CONSUMED;
+		return false;
 	}
 	EScript::Object * handler = nullptr;
 	
@@ -407,17 +452,16 @@ GUI::listenerResult_t EScript_EventHandler::handleAction(GUI::Component * compon
 	}
 	
 	if(handler==nullptr)
-		return GUI::LISTENER_EVENT_NOT_CONSUMED;
+		return false;
 
 
 //std::cout << "actionName:"<< actionName.toString()<<"\n";
 
 	EScript::ObjRef resultObj = rt.executeFunction(handler, obj, EScript::ParameterValues());
-	return GUI::LISTENER_EVENT_CONSUMED;
+	return true;
 }
 
-//! ---|> DataChangeListener
-void EScript_EventHandler::handleDataChange(GUI::Component * component,const Util::StringIdentifier & /*actionName*/) {
+void E_GUI_Manager_EventHandler::handleDataChange(GUI::Component * component) {
 	EScript::ObjRef obj = EScript::create(component);
 	if (obj.isNull()) {
 		WARN(" ");
@@ -440,8 +484,7 @@ void EScript_EventHandler::handleDataChange(GUI::Component * component,const Uti
 	EScript::ObjRef resultObj = callMemberFunction(rt,obj,ID_onDataChanged,EScript::ParameterValues(data));
 }
 
-//! ---|> MouseButtonListener
-GUI::listenerResult_t EScript_EventHandler::onMouseButton(GUI::Component * component, const Util::UI::ButtonEvent & buttonEvent){
+bool E_GUI_Manager_EventHandler::onMouseButton(GUI::Component * component, const Util::UI::ButtonEvent & buttonEvent){
 	static const EScript::StringId ID_onMouseButton("onMouseButton");
 
 	Util::UI::Event event;
@@ -452,13 +495,13 @@ GUI::listenerResult_t EScript_EventHandler::onMouseButton(GUI::Component * compo
 		if(handlerExists){
 			EScript::ObjRef resultObj = callMemberFunction(rt,&eManager,ID_onMouseButton,EScript::ParameterValues(new E_Util::E_UI::E_Event(event)));
 			if(resultObj.toBool())
-				return GUI::LISTENER_EVENT_CONSUMED;
+				return true;
 		}
 	}else{ // object handler
 		EScript::ObjRef obj = EScript::create(component);
 		if (obj.isNull()) {
 			WARN(" ");
-			return GUI::LISTENER_EVENT_NOT_CONSUMED;
+			return false;
 		}
 
 		const bool handlerExists = !obj->getAttribute(ID_onMouseButton).isNull();
@@ -466,14 +509,13 @@ GUI::listenerResult_t EScript_EventHandler::onMouseButton(GUI::Component * compo
 		if (handlerExists){
 			EScript::ObjRef resultObj = callMemberFunction(rt,obj,ID_onMouseButton,EScript::ParameterValues(new E_Util::E_UI::E_Event(event)));
 			if(resultObj.toBool())
-				return GUI::LISTENER_EVENT_CONSUMED;
+				return true;
 		}
 	}
-	return GUI::LISTENER_EVENT_NOT_CONSUMED;
+	return false;
 }
 
-//! ---|> MouseMotionListener
-GUI::listenerResult_t EScript_EventHandler::onMouseMove(GUI::Component * /*component*/, const Util::UI::MotionEvent & motionEvent) {
+bool E_GUI_Manager_EventHandler::onMouseMove(GUI::Component * /*component*/, const Util::UI::MotionEvent & motionEvent) {
 	static Geometry::Vec2i lastMousePos;
 	const Geometry::Vec2i currentMousePos(motionEvent.x, motionEvent.y);
 	lastMousePos = currentMousePos;
@@ -488,14 +530,13 @@ GUI::listenerResult_t EScript_EventHandler::onMouseMove(GUI::Component * /*compo
 	if(mouseMotionHandler.toBool()){
 		EScript::ObjRef resultObj = callMemberFunction(rt,&eManager,ID_onMouseMove,EScript::ParameterValues(new E_Util::E_UI::E_Event(event)));
 		if(resultObj.toBool())
-			return GUI::LISTENER_EVENT_CONSUMED;
+			return true;
 	}
 
-	return GUI::LISTENER_EVENT_NOT_CONSUMED;
+	return false;
 }
 
-//! ---|> KeyListener
-bool EScript_EventHandler::onKeyEvent(GUI::Component * component, const Util::UI::KeyboardEvent & keyEvent){
+bool E_GUI_Manager_EventHandler::onKeyEvent(GUI::Component * component, const Util::UI::KeyboardEvent & keyEvent){
 	EScript::ObjRef obj=EScript::create(component);
 	if (obj.isNull()) {
 		WARN(" ");
@@ -519,20 +560,14 @@ bool EScript_EventHandler::onKeyEvent(GUI::Component * component, const Util::UI
 
 //! (ctor)
 E_GUI_Manager::E_GUI_Manager(Util::UI::EventContext & eventContext, EScript::Runtime & rt,EScript::Type * type):
-		ExtObject(type?type:typeObject),manager(new GUI::GUI_Manager(eventContext)),myEventHandler(rt,*this) {
-	manager->registerActionListener(&myEventHandler);
-	manager->registerDataChangeListener(&myEventHandler);
-	manager->addMouseMotionListener(&myEventHandler);
-	manager->addMouseButtonListener(&myEventHandler);
-
+	ExtObject(type ? type : typeObject),
+	manager(new GUI::GUI_Manager(eventContext)),
+	eventHandler(new E_GUI_Manager_EventHandler(rt, *this)) {
 	_initAttributes(rt);
 }
 
 //! (dtor)
-E_GUI_Manager::~E_GUI_Manager() {
-	// FIXME: See ticket #316.
-	//delete manager;
-}
+E_GUI_Manager::~E_GUI_Manager() = default;
 
 //! ---|> Object
 EScript::Object * E_GUI_Manager::clone()const {
@@ -542,6 +577,10 @@ EScript::Object * E_GUI_Manager::clone()const {
 
 bool E_GUI_Manager::handleEvent(const Util::UI::Event & event) {
 	return manager->handleEvent(event);
+}
+
+E_GUI_Manager_EventHandler * E_GUI_Manager::getEventHandler() {
+	return eventHandler.get();
 }
 
 }
