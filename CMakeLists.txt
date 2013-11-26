@@ -11,7 +11,7 @@ project(E_GUI)
 
 set(E_GUI_VERSION_MAJOR 0)
 set(E_GUI_VERSION_MINOR 1)
-set(E_GUI_VERSION_PATCH 2)
+set(E_GUI_VERSION_PATCH 3)
 set(E_GUI_VERSION_STRING ${E_GUI_VERSION_MAJOR}.${E_GUI_VERSION_MINOR}.${E_GUI_VERSION_PATCH})
 
 # Set up install directories
@@ -74,7 +74,7 @@ target_link_libraries(E_GUI LINK_PUBLIC Geometry)
 
 # Dependency to GUI
 if(NOT TARGET GUI)
-	find_package(GUI 0.1.2 REQUIRED NO_MODULE)
+	find_package(GUI 0.1.3 REQUIRED NO_MODULE)
 endif()
 target_link_libraries(E_GUI LINK_PUBLIC GUI)
 
