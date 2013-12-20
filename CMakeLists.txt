@@ -59,31 +59,31 @@ target_link_libraries(E_GUI LINK_PUBLIC EScript)
 
 # Dependency to Geometry
 if(NOT TARGET Geometry)
-	find_package(Geometry 0.1.3 REQUIRED NO_MODULE)
+	find_package(Geometry 0.2.0 REQUIRED NO_MODULE)
 endif()
 target_link_libraries(E_GUI LINK_PUBLIC Geometry)
 
 # Dependency to GUI
 if(NOT TARGET GUI)
-	find_package(GUI 0.1.3 REQUIRED NO_MODULE)
+	find_package(GUI 0.2.0 REQUIRED NO_MODULE)
 endif()
 target_link_libraries(E_GUI LINK_PUBLIC GUI)
 
 # Dependency to E_Geometry
 if(NOT TARGET E_Geometry)
-	find_package(E_Geometry 0.1.2 REQUIRED NO_MODULE)
+	find_package(E_Geometry 0.2.0 REQUIRED NO_MODULE)
 endif()
 target_link_libraries(E_GUI LINK_PUBLIC E_Geometry)
 
 # Dependency to E_Util
 if(NOT TARGET E_Util)
-	find_package(E_Util 0.1.2 REQUIRED NO_MODULE)
+	find_package(E_Util 0.2.0 REQUIRED NO_MODULE)
 endif()
 target_link_libraries(E_GUI LINK_PUBLIC E_Util)
 
 # Dependency to Util
 if(NOT TARGET Util)
-	find_package(Util 0.1.3 REQUIRED NO_MODULE)
+	find_package(Util 0.2.0 REQUIRED NO_MODULE)
 endif()
 target_link_libraries(E_GUI LINK_PUBLIC Util)
 
