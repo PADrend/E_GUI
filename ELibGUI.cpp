@@ -106,6 +106,7 @@ void init(EScript::Namespace * globals) {
 	declareConstant(lib,"BORDER",new EScript::Number(GUI::Component::BORDER));
 	declareConstant(lib,"ALWAYS_ON_TOP",new EScript::Number(GUI::Component::ALWAYS_ON_TOP));
 	declareConstant(lib,"LOCKED",new EScript::Number(GUI::Component::LOCKED));
+	declareConstant(lib,"USE_SCISSOR",new EScript::Number(GUI::Component::USE_SCISSOR));
 
 	/// ExternalLayout
 	declareConstant(lib,"REFERENCE_X_LEFT",new EScript::Number(GUI::ExtLayouter::REFERENCE_X_LEFT));
