@@ -43,8 +43,8 @@ void E_BitmapFont::init(EScript::Namespace & lib) {
 		thisObj->get()->addGlyph( 	parameter[0].to<uint32_t>(rt),
 									parameter[1].to<uint32_t>(rt),
 									parameter[2].to<uint32_t>(rt),
-									Geometry::Vec2i( parameter[3].to<const Geometry::Vec2&>(rt) ),
-									Geometry::Vec2i( parameter[4].to<const Geometry::Vec2&>(rt) ),
+									Geometry::Vec2i( parameter[3].to<Geometry::Vec2>(rt) ),
+									Geometry::Vec2i( parameter[4].to<Geometry::Vec2>(rt) ),
 									parameter[5].to<uint32_t>(rt));
 		return thisEObj;
 	})

@@ -47,7 +47,7 @@ void E_ListView::init(EScript::Namespace & lib) {
 	ES_MFUN(typeObject,ListView, "removeMarking", 1,1,			(thisObj->removeMarking(parameter[0].to<GUI::Component*>(rt)),thisEObj))
 
 	//! self ListView.scrollTo( Vec2 pos [,Number duration=0] )
-	ES_MFUN(typeObject,ListView, "scrollTo", 1,2,				(thisObj->scrollTo(parameter[0].to<const Geometry::Vec2&>(rt),parameter[1].toFloat(0)), thisEObj));
+	ES_MFUN(typeObject,ListView, "scrollTo", 1,2,				(thisObj->scrollTo(parameter[0].to<Geometry::Vec2>(rt),parameter[1].toFloat(0)), thisEObj));
 
 	//! self ListView.setEntryHeight(Number )
 	ES_MFUN(typeObject,ListView, "setEntryHeight", 1,1, 		(thisObj->setEntryHeight(parameter[0].to<float>(rt)),thisEObj))

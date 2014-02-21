@@ -281,7 +281,7 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 
 	//! [ESMF] Component GUI_Manager.getComponentAtPos(Geometry.Vec2 pos)
 	ES_MFUN(typeObject,GUI_Manager,"getComponentAtPos",1,1,EScript::create(
-				thisObj->getComponentAtPos(parameter[0].to<const Geometry::Vec2&>(rt))))
+				thisObj->getComponentAtPos(parameter[0].to<Geometry::Vec2>(rt))))
 	
 	//! [ESMF] Number GUI_Manager.getDebugMode()
 	ES_MFUN(typeObject,GUI_Manager,"getDebugMode",0,0,thisObj->getDebugMode())

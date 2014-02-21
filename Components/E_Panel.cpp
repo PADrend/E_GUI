@@ -50,8 +50,8 @@ void E_Panel::init(EScript::Namespace & lib) {
 
 	//! self Panel.scrollTo( Vec2 pos [,Number duration] )
 	ES_MFUN(typeObject,Panel, "scrollTo", 1,2, (parameter.count()>1 ?
-			thisObj->scrollTo(parameter[0].to<const Geometry::Vec2&>(rt),parameter[1].to<float>(rt)) :
-			thisObj->scrollTo(parameter[0].to<const Geometry::Vec2&>(rt)), thisEObj));
+			thisObj->scrollTo(parameter[0].to<Geometry::Vec2>(rt),parameter[1].to<float>(rt)) :
+			thisObj->scrollTo(parameter[0].to<Geometry::Vec2>(rt)), thisEObj));
 
 }
 

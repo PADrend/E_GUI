@@ -26,7 +26,7 @@ void E_Menu::init(EScript::Namespace & lib) {
 	using namespace GUI;
 
 	//! [ESMF] self Menu.open(Vec2 pos)
-	ES_MFUN(typeObject,Menu,"open",1,1,		(thisObj->open(parameter[0].to<const Geometry::Vec2&>(rt)),thisEObj))
+	ES_MFUN(typeObject,Menu,"open",1,1,		(thisObj->open(parameter[0].to<Geometry::Vec2>(rt)),thisEObj))
 
 	//! [ESMF] self Menu.close()
 	ES_MFUN(typeObject,Menu,"close",0,0,	(thisObj->close(),thisEObj))

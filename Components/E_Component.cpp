@@ -57,6 +57,12 @@ void E_Component::init(EScript::Namespace & lib) {
 	//! [ESMF] self Component.clearLayouters()
 	ES_MFUN(typeObject,Component,"clearLayouters",0,0,(thisObj->clearLayouters(),thisEObj))
 
+	//! [ESMF] Bool Component.coversAbsPosition( Vec2 )
+	ES_MFUN(typeObject,Component,"coversAbsPosition",1,1, thisObj->coversAbsPosition(parameter[0].to<Geometry::Vec2>(rt)))
+
+	//! [ESMF] Bool Component.coversLocalPosition( Vec2 )
+	ES_MFUN(typeObject,Component,"coversLocalPosition",1,1, thisObj->coversLocalPosition(parameter[0].to<Geometry::Vec2>(rt)))
+
 	//! [ESMF] E_Rect Component.getAbsRect()
 	ES_MFUN(typeObject,Component,"getAbsRect",0,0,EScript::create(thisObj->getAbsRect()))
 
@@ -66,7 +72,7 @@ void E_Component::init(EScript::Namespace & lib) {
 	//! [ESMF] component Component.getComponentAtPos( x,y | Vec2)
 	ES_MFUN(typeObject,Component,"getComponentAtPos",1,2,EScript::create( (parameter.count()==2 ?
 			thisObj->getComponentAtPos(Geometry::Vec2(parameter[0].to<float>(rt),parameter[1].to<float>(rt))):
-			thisObj->getComponentAtPos(parameter[0].to<const Geometry::Vec2&>(rt))
+			thisObj->getComponentAtPos(parameter[0].to<Geometry::Vec2>(rt))
 	)))
 
 	//! [ESMF] bool Component.getFlag(int)
@@ -155,10 +161,10 @@ void E_Component::init(EScript::Namespace & lib) {
 	//! [ESMF] Shape Component.setExtLayout( flags , Vec2 pos[, Vec2 size])
 	ES_MFUN(typeObject,Component,"setExtLayout",2,3,(
 		(parameter.count()==2 ? thisObj->setExtLayout(
-									parameter[0].to<uint32_t>(rt),parameter[1].to<const Geometry::Vec2&>(rt)) :
+									parameter[0].to<uint32_t>(rt),parameter[1].to<Geometry::Vec2>(rt)) :
 								thisObj->setExtLayout(
-									parameter[0].to<uint32_t>(rt),parameter[1].to<const Geometry::Vec2&>(rt),
-									parameter[2].to<const Geometry::Vec2&>(rt))),thisEObj))
+									parameter[0].to<uint32_t>(rt),parameter[1].to<Geometry::Vec2>(rt),
+									parameter[2].to<Geometry::Vec2>(rt))),thisEObj))
 
 	//! [ESMF] self Component.setFlag(int[,bool b=true])
 	ES_MFUN(typeObject,Component,"setFlag",1,2,		(thisObj->setFlag(parameter[0].to<uint32_t>(rt),parameter[1].to<bool>(rt,true)),thisEObj))
@@ -177,7 +183,7 @@ void E_Component::init(EScript::Namespace & lib) {
 
 	//! [ESMF] Shape Component.setSize( Vec2 pos[, float x, float y])
 	ES_MFUN(typeObject,Component,"setSize",1,2,(
-		(parameter.count()==1 ? thisObj->setSize(parameter[0].to<const Geometry::Vec2&>(rt)) :
+		(parameter.count()==1 ? thisObj->setSize(parameter[0].to<Geometry::Vec2>(rt)) :
 								thisObj->setSize(parameter[0].to<float>(rt),parameter[1].to<float>(rt))),thisEObj))
 
 	//! [ESMF] Component Component.setVisible([bool]) // DEPRECEATED
@@ -189,7 +195,7 @@ void E_Component::init(EScript::Namespace & lib) {
 	//! [ESMF] self Component.setPosition( x,y |  Vec2)
 	ES_MFUN(typeObject,Component,"setPosition",1,2,( (parameter.count()==2 ?
 			thisObj->setPosition(Geometry::Vec2(parameter[0].to<float>(rt),parameter[1].to<float>(rt))):
-			thisObj->setPosition(parameter[0].to<const Geometry::Vec2&>(rt))
+			thisObj->setPosition(parameter[0].to<Geometry::Vec2>(rt))
 			),thisEObj))
 
 	//! [ESMF] self Component.select()
