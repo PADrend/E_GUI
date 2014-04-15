@@ -11,7 +11,6 @@
 #include "E_Connector.h"
 
 #include <EScript/EScript.h>
-#include <EScript/Utils/DeprecatedMacros.h>
 #include "../ELibGUI.h"
 
 namespace E_GUI {
@@ -25,7 +24,7 @@ void E_Connector::init(EScript::Namespace & lib) {
 	using namespace GUI;
 
 	//! [ESF] (static) Array GUI.findConnectors( container,endpoint )
-	ES_FUNCTION2(&lib,"findConnectors",2,2,{
+	ES_FUNCTION(&lib,"findConnectors",2,2,{
 		EScript::Array * a = EScript::Array::create();
 		std::list<GUI::Connector *> connectors;
 		GUI::Connector::findConnectors(	parameter[0].to<Container*>(rt),
