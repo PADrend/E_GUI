@@ -442,10 +442,12 @@ bool E_GUI_Manager_EventHandler::handleAction(GUI::Component * component,const U
 	}
 	EScript::Object * handler = nullptr;
 	
-	if(actionName == GUI::TreeView::TreeViewEntry::ACTION_TreeViewEntry_collapse){
+	if(		actionName == GUI::TreeView::TreeViewEntry::ACTION_TreeViewEntry_collapse ||
+			actionName == GUI::TabbedPanel::Tab::ACTION_Tab_close ){
 		static const EScript::StringId ID_handler("onClose");
 		handler = obj->getAttribute(ID_handler).getValue();
-	}else if(actionName == GUI::TreeView::TreeViewEntry::ACTION_TreeViewEntry_open){
+	}else if(	actionName == GUI::TreeView::TreeViewEntry::ACTION_TreeViewEntry_open || 
+				actionName == GUI::TabbedPanel::Tab::ACTION_Tab_open ){
 		static const EScript::StringId ID_handler("onOpen");
 		handler = obj->getAttribute(ID_handler).getValue();
 	}else if(actionName == GUI::Window::ACTION_onWindowClosed){
