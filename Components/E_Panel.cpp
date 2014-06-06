@@ -34,7 +34,7 @@ void E_Panel::init(EScript::Namespace & lib) {
 	ES_MFUN(typeObject,Panel,"enableAutoBreak",0,0,			(thisObj->enableAutoBreak(),thisEObj))
 
 	//! Container Panel.getContentContainer( )
-	ES_MFUN(typeObject,Panel, "getContentContainer",0,0,	EScript::create(thisObj->getContentContainer()))
+	ES_MFUN(typeObject,const Panel, "getContentContainer",0,0,	EScript::create(thisObj->getContentContainer()))
 
 	//! [ESMF] self Panel.nextColumn(Number)
 	ES_MFUN(typeObject,Panel,"nextColumn",0,1,				(thisObj->nextColumn(parameter[0].toInt(0)),thisEObj))
@@ -53,6 +53,8 @@ void E_Panel::init(EScript::Namespace & lib) {
 			thisObj->scrollTo(parameter[0].to<Geometry::Vec2>(rt),parameter[1].to<float>(rt)) :
 			thisObj->scrollTo(parameter[0].to<Geometry::Vec2>(rt)), thisEObj));
 
+	//! Vec2 Panel.getScrollPos( )
+	ES_MFUN(typeObject,const Panel, "getScrollPos",0,0,	thisObj->getScrollPos())
 }
 
 }
