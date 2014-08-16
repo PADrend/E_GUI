@@ -29,7 +29,7 @@ void E_Label::init(EScript::Namespace & lib) {
 	ES_MFUN(typeObject,const Label,"getText",0,0, 	(thisObj->getText()))
 
 	//!	[ESMF] self Label.setColor(E_Color4?)
-	ES_MFUN(typeObject,Label,"setColor",1,1,		(thisObj->setColor( parameter[0].to<Util::Color4f>(rt) ),thisEObj))
+	ES_MFUN(typeObject,Label,"setColor",1,1,		(thisObj->setColor( parameter[0].to<Util::Color4ub>(rt) ),thisEObj))
 
 	//! [ESMF] self Label.setFont(AbstractFont f)
 	ES_MFUN(typeObject,Label,"setFont",1,1,			(thisObj->setFont(parameter[0].to<AbstractFont*>(rt)),thisEObj))

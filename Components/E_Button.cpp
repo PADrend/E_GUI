@@ -32,7 +32,7 @@ void E_Button::init(EScript::Namespace & lib) {
 	ES_MFUN(typeObject,const Button,"isSwitchedOn",0,0,	thisObj->isSwitchedOn())
 
 	//!	[ESMF] self Button.setColor(Util.Color4)
-	ES_MFUN(typeObject,Button,"setColor",1,1,			(thisObj->setColor(parameter[0].to<Util::Color4f>(rt)),thisEObj))
+	ES_MFUN(typeObject,Button,"setColor",1,1,			(thisObj->setColor(parameter[0].to<Util::Color4ub>(rt)),thisEObj))
 
 	//! [ESMF] self Button.setFont(AbstractFont f)
 	ES_MFUN(typeObject,Button,"setFont",1,1,			(thisObj->setFont(parameter[0].to<AbstractFont*>(rt)),thisEObj))

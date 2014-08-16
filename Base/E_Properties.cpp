@@ -79,7 +79,7 @@ void E_Property::init(EScript::Namespace & lib) {
 		declareConstant(&lib,E_ColorProperty::getClassName(),t);
 
 		//! [ESF] new ColorProperty(Number id,Util.Color4(ub|f) )
-		ES_CTOR(t, 2,2, (EScript::create(new ColorProperty(parameter[0].toInt(),parameter[1].to<Util::Color4f>(rt)))))
+		ES_CTOR(t, 2,2, (EScript::create(new ColorProperty(parameter[0].toInt(),parameter[1].to<Util::Color4ub>(rt)))))
 
 		addFactory<ColorProperty,E_ColorProperty>();
 	}
