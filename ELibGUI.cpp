@@ -140,7 +140,6 @@ void init(EScript::Namespace * globals) {
 
 	/// Button
 	declareConstant(lib,"FLAT_BUTTON",new EScript::Number(GUI::Button::FLAT_BUTTON));
-	declareConstant(lib,"HOVER_BUTTON",new EScript::Number(GUI::Button::HOVER_BUTTON));
 	/// Menu
 	declareConstant(lib,"ONE_TIME_MENU",new EScript::Number(GUI::Menu::ONE_TIME_MENU));
 	/// Panel
@@ -172,6 +171,7 @@ void init(EScript::Namespace * globals) {
 	declareConstant(lib,"PROPERTY_CHECKBOX_SHAPE",new EScript::Number(GUI::PROPERTY_CHECKBOX_SHAPE));
 	declareConstant(lib,"PROPERTY_CHECKBOX_MARKER_SHAPE",new EScript::Number(GUI::PROPERTY_CHECKBOX_MARKER_SHAPE));
 	declareConstant(lib,"PROPERTY_COMPONENT_BACKGROUND_SHAPE",new EScript::Number(GUI::PROPERTY_COMPONENT_BACKGROUND_SHAPE));
+	declareConstant(lib,"PROPERTY_COMPONENT_ADDITIONAL_BACKGROUND_SHAPE",new EScript::Number(GUI::PROPERTY_COMPONENT_ADDITIONAL_BACKGROUND_SHAPE));
 	declareConstant(lib,"PROPERTY_COMPONENT_BORDER_SHAPE",new EScript::Number(GUI::PROPERTY_COMPONENT_BORDER_SHAPE));
 	declareConstant(lib,"PROPERTY_COMPONENT_RAISED_BORDER_SHAPE",new EScript::Number(GUI::PROPERTY_COMPONENT_RAISED_BORDER_SHAPE));
 	declareConstant(lib,"PROPERTY_COMPONENT_LOWERED_BORDER_SHAPE",new EScript::Number(GUI::PROPERTY_COMPONENT_LOWERED_BORDER_SHAPE));

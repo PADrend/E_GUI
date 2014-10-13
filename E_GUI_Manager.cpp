@@ -421,6 +421,11 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 			new E_AbstractShape( new SmoothConnectorShape( parameter[0].to<Util::Color4ub>(rt),parameter[1].to<float>(rt))))
 
 
+	//! [ESMF]  Shape GUI_Manager._createTriangleAtCornerShape( Color4?  c, number size)
+	ES_FUN(typeObject,"_createTriangleAtCornerShape",2,2,
+			new E_AbstractShape( new TriangleAtCornerShape( parameter[0].to<Util::Color4ub>(rt),parameter[1].to<float>(rt))))
+
+
 	//! [ESMF]  Shape GUI_Manager._createStraightLineShape( Color4?  c, number lineWidth)
 	ES_FUN(typeObject,"_createStraightLineShape",2,2,
 			new E_AbstractShape( new StraightLineShape( parameter[0].to<Util::Color4ub>(rt),parameter[1].to<float>(rt))))

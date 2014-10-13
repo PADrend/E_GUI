@@ -12,6 +12,7 @@
 
 #include <EScript/EScript.h>
 #include <GUI/Components/Container.h>
+#include <GUI/Components/ComponentHoverPropertyFeature.h>
 #include <E_Geometry/E_Vec2.h>
 #include <E_Geometry/E_Rect.h>
 #include <E_Util/E_Utils.h>
@@ -40,16 +41,23 @@ void E_Component::init(EScript::Namespace & lib) {
 	//! [ESMF] self Component.activate()
 	ES_MFUN(typeObject,Component,"activate",0,0,(thisObj->bringToFront(),thisObj->activate(),thisEObj))
 
-	//! [ESMF] self Component.addProperty(AbstractProperty)
+	//! [ESMF] self Component.addProperty(DisplayProperty)
 	ES_MFUN(typeObject,Component,"addProperty",1,1,
-				(thisObj->addProperty(parameter[0].to<GUI::AbstractProperty*>(rt)),thisEObj))
+				(thisObj->addProperty(parameter[0].to<GUI::DisplayProperty*>(rt)),thisEObj))
 
 	//! [ESMF] self Component.addLayouter(AbstractLayouter)
 	ES_MFUN(typeObject,Component,"addLayouter",1,1,
 				(thisObj->addLayouter(parameter[0].to<AbstractLayouter*>(rt)),thisEObj))
+				
+	//! [ESMF] self Component.addLocalProperty(DisplayProperty)
+	ES_MFUN(typeObject,Component,"addLocalProperty",1,1,
+				(thisObj->addLocalProperty(parameter[0].to<GUI::DisplayProperty*>(rt)),thisEObj))
 
 	//! [ESMF] self Component.bringToFront()
 	ES_MFUN(typeObject,Component,"bringToFront",0,0,(thisObj->bringToFront(),thisObj->bringToFront(),thisEObj))
+
+	//! [ESMF] self Component.clearProperties()
+	ES_MFUN(typeObject,Component,"clearLocalProperties",0,0,(thisObj->clearLocalProperties(),thisEObj))
 
 	//! [ESMF] self Component.clearProperties()
 	ES_MFUN(typeObject,Component,"clearProperties",0,0,(thisObj->clearProperties(),thisEObj))
@@ -148,9 +156,13 @@ void E_Component::init(EScript::Namespace & lib) {
 	ES_MFUN(typeObject,Component,"removeLayouter",1,1,
 				(thisObj->removeLayouter(parameter[0].to<AbstractLayouter*>(rt)),thisEObj))
 
-	//! [ESMF] self Component.removeProperty(AbstractProperty)
+	//! [ESMF] self Component.removeLocalProperty(DisplayProperty)
+	ES_MFUN(typeObject,Component,"removeLocalProperty",1,1,
+				(thisObj->removeLocalProperty(parameter[0].to<GUI::DisplayProperty*>(rt)),thisEObj))
+				
+	//! [ESMF] self Component.removeProperty(DisplayProperty)
 	ES_MFUN(typeObject,Component,"removeProperty",1,1,
-				(thisObj->removeProperty(parameter[0].to<GUI::AbstractProperty*>(rt)),thisEObj))
+				(thisObj->removeProperty(parameter[0].to<GUI::DisplayProperty*>(rt)),thisEObj))
 
 	//! [ESMF] self Component.removeTooltip()
 	ES_MFUN(typeObject,Component,"removeTooltip",0,0,(thisObj->removeTooltip(),thisEObj))
@@ -203,6 +215,21 @@ void E_Component::init(EScript::Namespace & lib) {
 
 	//! [ESMF] self Component.unselect()
 	ES_MFUN(typeObject,Component,"unselect",0,0,	(thisObj->unselect(),thisEObj))
+	
+	// ComponentHoverProperty
+	//! [ESMF] Bool Component.hasComponentHoverProperties()
+	ES_MFUN(typeObject,const Component,"hasComponentHoverProperties",0,0,		hasComponentHoverProperties(*thisObj))
+	
+//	//! [ESMF] Component Component.getComponentHoverProperties()
+//	ES_MFUN(typeObject,const Component,"getComponentHoverProperties",0,0,		EScript::create(getComponentHoverProperties(*thisObj)))
+	
+	//! [ESMF] self Component.clearComponentHoverProperties()
+	ES_MFUN(typeObject,Component,"clearComponentHoverProperties",0,0,	(clearComponentHoverProperties(*thisObj),thisEObj))
+//	
+	//! [ESMF] self Component.addComponentHoverProperty(Property,layer,recursive)
+	ES_MFUN(typeObject,Component,"addComponentHoverProperty",3,3,	
+			(addComponentHoverProperty(*thisObj,parameter[0].to<DisplayProperty*>(rt), static_cast<hoverPropertyLayer_t>(parameter[1].toUInt()),parameter[2].toBool()),	thisEObj))
+
 }
 
 }

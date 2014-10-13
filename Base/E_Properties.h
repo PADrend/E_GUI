@@ -22,22 +22,22 @@ namespace E_GUI {
 /***
  **   E_Property ---|> ReferenceObject
  **     |
- **     ------> GUI::AbstractProperty
+ **     ------> GUI::DisplayProperty
  **/
-class E_Property : public EScript::ReferenceObject<Util::Reference<GUI::AbstractProperty> >{
-		ES_PROVIDES_TYPE_NAME(AbstractProperty)
+class E_Property : public EScript::ReferenceObject<Util::Reference<GUI::DisplayProperty> >{
+		ES_PROVIDES_TYPE_NAME(DisplayProperty)
 
-	//!	@name AbstractProperty -> E_Property
+	//!	@name DisplayProperty -> E_Property
 	//	@{
 	private:
-		static E_Util::E_ObjectFactory<GUI::AbstractProperty, E_Property> factorySystem;
+		static E_Util::E_ObjectFactory<GUI::DisplayProperty, E_Property> factorySystem;
 	protected:
 		template<class PropertyType, class E_PropertyType>
 		static void addFactory() {
-			factorySystem.registerType(PropertyType::getClassId(), Util::PolymorphicWrapperCreator<GUI::AbstractProperty, PropertyType, E_PropertyType>());
+			factorySystem.registerType(PropertyType::getClassId(), Util::PolymorphicWrapperCreator<GUI::DisplayProperty, PropertyType, E_PropertyType>());
 		}
 	public:
-		static E_Property * create(GUI::AbstractProperty * property) {
+		static E_Property * create(GUI::DisplayProperty * property) {
 			if(property == nullptr) {
 				return nullptr;
 			}
@@ -49,7 +49,7 @@ class E_Property : public EScript::ReferenceObject<Util::Reference<GUI::Abstract
 		static EScript::Type * getTypeObject();
 		static void init(EScript::Namespace & lib);
 
-		E_Property(GUI::AbstractProperty * p, EScript::Type* type=nullptr) : ReferenceObject_t(p,type?type:getTypeObject()) {}
+		E_Property(GUI::DisplayProperty * p, EScript::Type* type=nullptr) : ReferenceObject_t(p,type?type:getTypeObject()) {}
 		virtual ~E_Property()	{}
 };
 
@@ -116,11 +116,11 @@ class E_UseShapeProperty : public E_Property{
 
 }
 
-ES_CONV_EOBJ_TO_OBJ(E_GUI::E_Property,			GUI::AbstractProperty*,		(**eObj).get())
+ES_CONV_EOBJ_TO_OBJ(E_GUI::E_Property,			GUI::DisplayProperty*,		(**eObj).get())
 ES_CONV_EOBJ_TO_OBJ(E_GUI::E_ColorProperty,		GUI::ColorProperty*,		**eObj)
 ES_CONV_EOBJ_TO_OBJ(E_GUI::E_FontProperty,		GUI::FontProperty*,			**eObj)
 ES_CONV_EOBJ_TO_OBJ(E_GUI::E_ShapeProperty,		GUI::ShapeProperty*,		**eObj)
 ES_CONV_EOBJ_TO_OBJ(E_GUI::E_UseShapeProperty,	GUI::UseShapeProperty*,		**eObj)
-ES_CONV_OBJ_TO_EOBJ(GUI::AbstractProperty*,		E_GUI::E_Property,			E_GUI::E_Property::create(obj))
+ES_CONV_OBJ_TO_EOBJ(GUI::DisplayProperty*,		E_GUI::E_Property,			E_GUI::E_Property::create(obj))
 
 #endif // __E_Properties_H

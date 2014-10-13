@@ -28,7 +28,7 @@ using namespace EScript;
 namespace E_GUI {
 
 //! (static)
-E_Util::E_ObjectFactory<AbstractProperty, E_Property> E_Property::factorySystem;
+E_Util::E_ObjectFactory<DisplayProperty, E_Property> E_Property::factorySystem;
 
 //! (static)
 Type * E_Property::getTypeObject(){
@@ -66,12 +66,12 @@ Type * E_UseShapeProperty::getTypeObject(){
  * [static]
  */
 void E_Property::init(EScript::Namespace & lib) {
-	{	// GUI.AbstractProperty ---|> Object
+	{	// GUI.DisplayProperty ---|> Object
 		Type  * t = E_Property::getTypeObject();
 
 		declareConstant(&lib,E_Property::getClassName(),t);
 
-		addFactory<AbstractProperty,E_Property>();
+		addFactory<DisplayProperty,E_Property>();
 	}
 	{	// GUI.ColorProperty ---|> GUI.Property ---|> Object
 		Type  * t = E_ColorProperty::getTypeObject();
@@ -92,7 +92,7 @@ void E_Property::init(EScript::Namespace & lib) {
 		ES_CTOR(t, 2,2, EScript::create(new FontProperty(parameter[0].toInt(), parameter[1].to<AbstractFont*>(rt))))
 		addFactory<FontProperty,E_FontProperty>();
 	}
-	{	// GUI.ShapeProperty ---|> GUI.AbstractProperty ---|> Object
+	{	// GUI.ShapeProperty ---|> GUI.DisplayProperty ---|> Object
 		Type  * t = E_ShapeProperty::getTypeObject();
 
 		declareConstant(&lib,E_ShapeProperty::getClassName(),t);
@@ -108,7 +108,7 @@ void E_Property::init(EScript::Namespace & lib) {
 
 		addFactory<ShapeProperty,E_ShapeProperty>();
 	}
-	{	// GUI.UseShapeProperty ---|> GUI.AbstractProperty ---|> Object
+	{	// GUI.UseShapeProperty ---|> GUI.DisplayProperty ---|> Object
 		Type * t = E_UseShapeProperty::getTypeObject();
 
 		declareConstant(&lib,E_UseShapeProperty::getClassName(),t);
