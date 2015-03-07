@@ -37,7 +37,8 @@ class E_BitmapFont :  public E_AbstractFont {
 };
 }
 
-ES_CONV_EOBJ_TO_OBJ(E_GUI::E_BitmapFont,		GUI::BitmapFont*,		eObj->get())
-ES_CONV_OBJ_TO_EOBJ(GUI::BitmapFont*,			E_GUI::E_BitmapFont,	new E_GUI::E_BitmapFont(obj))
+ES_CONV_EOBJ_TO_OBJ(E_GUI::E_BitmapFont,						GUI::BitmapFont*,		eObj->get())
+ES_CONV_OBJ_TO_EOBJ(GUI::BitmapFont*,							E_GUI::E_BitmapFont,	new E_GUI::E_BitmapFont(obj))
+ES_CONV_OBJ_TO_EOBJ(Util::Reference<GUI::BitmapFont>,			E_GUI::E_BitmapFont,	new E_GUI::E_BitmapFont(obj.get()))
 
 #endif // E_GUI_BITMAP_FONT_H
