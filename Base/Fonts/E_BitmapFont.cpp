@@ -49,6 +49,8 @@ void E_BitmapFont::init(EScript::Namespace & lib) {
 		return thisEObj;
 	})
 
+	//!	[ESMF] self BitmapFont.setKerning( Number unicode1,Number unicode2,Number kerning)
+	ES_MFUN(typeObject,BitmapFont,"setKerning",3,3,(thisObj->setKerning(parameter[0].to<uint32_t>(rt),parameter[1].to<uint32_t>(rt),parameter[2].to<int16_t>(rt)),thisObj))
 
 	//!	[ESMF] Util.Bitmap BitmapFont.getBitmap( )
 	ES_MFUN(typeObject,BitmapFont,"getBitmap",0,0,
