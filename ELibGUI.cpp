@@ -1,7 +1,7 @@
 /*
 	This file is part of the E_GUI library.
 	Copyright (C) 2008-2012 Benjamin Eikel <benjamin@eikel.org>
-	Copyright (C) 2008-2012 Claudius Jähn <claudius@uni-paderborn.de>
+	Copyright (C) 2008-2012,2015 Claudius Jähn <claudius@uni-paderborn.de>
 	Copyright (C) 2008-2012 Ralf Petring <ralf@petring.net>
 	
 	This library is subject to the terms of the Mozilla Public License, v. 2.0.
@@ -166,6 +166,7 @@ void init(EScript::Namespace * globals) {
 	/// Property Ids
 	declareConstant(lib,"PROPERTY_BUTTON_ENABLED_COLOR",new EScript::Number(GUI::PROPERTY_BUTTON_ENABLED_COLOR));
 	declareConstant(lib,"PROPERTY_BUTTON_SHAPE",new EScript::Number(GUI::PROPERTY_BUTTON_SHAPE));
+	declareConstant(lib,"PROPERTY_BUTTON_HOVERED_SHAPE",new EScript::Number(GUI::PROPERTY_BUTTON_HOVERED_SHAPE));
 	declareConstant(lib,"PROPERTY_BUTTON_HOVERED_TEXT_COLOR",new EScript::Number(GUI::PROPERTY_BUTTON_HOVERED_TEXT_COLOR));
 	declareConstant(lib,"PROPERTY_CHECKBOX_LABEL_INDENTATION",new EScript::Number(GUI::PROPERTY_CHECKBOX_LABEL_INDENTATION));
 	declareConstant(lib,"PROPERTY_CHECKBOX_SHAPE",new EScript::Number(GUI::PROPERTY_CHECKBOX_SHAPE));
@@ -243,12 +244,12 @@ void init(EScript::Namespace * globals) {
 	declareConstant(lib,"PASSIVE_COLOR_2",EScript::create( GUI::Colors::PASSIVE_COLOR_2));
 	declareConstant(lib,"PASSIVE_COLOR_3",EScript::create( GUI::Colors::PASSIVE_COLOR_3));
 	declareConstant(lib,"PASSIVE_COLOR_4",EScript::create( GUI::Colors::PASSIVE_COLOR_4));
-    
-    /// MouseCursors
-    declareConstant(lib, "PROPERTY_MOUSECURSOR_DEFAULT", EScript::String::create(GUI::PROPERTY_MOUSECURSOR_DEFAULT));
-    declareConstant(lib, "PROPERTY_MOUSECURSOR_COMPONENTS", EScript::String::create(GUI::PROPERTY_MOUSECURSOR_COMPONENTS));
-    declareConstant(lib, "PROPERTY_MOUSECURSOR_TEXTFIELD", EScript::String::create(GUI::PROPERTY_MOUSECURSOR_TEXTFIELD));
-    declareConstant(lib, "PROPERTY_MOUSECURSOR_RESIZEDIAGONAL", EScript::String::create(GUI::PROPERTY_MOUSECURSOR_RESIZEDIAGONAL));
+	
+	/// MouseCursors
+	declareConstant(lib, "PROPERTY_MOUSECURSOR_DEFAULT", EScript::String::create(GUI::PROPERTY_MOUSECURSOR_DEFAULT));
+	declareConstant(lib, "PROPERTY_MOUSECURSOR_COMPONENTS", EScript::String::create(GUI::PROPERTY_MOUSECURSOR_COMPONENTS));
+	declareConstant(lib, "PROPERTY_MOUSECURSOR_TEXTFIELD", EScript::String::create(GUI::PROPERTY_MOUSECURSOR_TEXTFIELD));
+	declareConstant(lib, "PROPERTY_MOUSECURSOR_RESIZEDIAGONAL", EScript::String::create(GUI::PROPERTY_MOUSECURSOR_RESIZEDIAGONAL));
 }
 
 }
