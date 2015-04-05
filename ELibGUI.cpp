@@ -197,7 +197,8 @@ void init(EScript::Namespace * globals) {
 	declareConstant(lib,"PROPERTY_TAB_HEADER_ACTIVE_TEXT_COLOR",new EScript::Number(GUI::PROPERTY_TAB_HEADER_ACTIVE_TEXT_COLOR));
 	declareConstant(lib,"PROPERTY_TAB_HEADER_HEIGHT",new EScript::Number(GUI::PROPERTY_TAB_HEADER_HEIGHT));
 	declareConstant(lib,"PROPERTY_TAB_HEADER_PASSIVE_TEXT_COLOR",new EScript::Number(GUI::PROPERTY_TAB_HEADER_PASSIVE_TEXT_COLOR));
-	declareConstant(lib,"PROPERTY_TAB_HEADER_SHAPE",new EScript::Number(GUI::PROPERTY_TAB_HEADER_SHAPE));
+	declareConstant(lib,"PROPERTY_TAB_HEADER_ACTIVE_SHAPE",new EScript::Number(GUI::PROPERTY_TAB_HEADER_ACTIVE_SHAPE));
+	declareConstant(lib,"PROPERTY_TAB_HEADER_PASSIVE_SHAPE",new EScript::Number(GUI::PROPERTY_TAB_HEADER_PASSIVE_SHAPE));
 	declareConstant(lib,"PROPERTY_TAB_BODY_SHAPE",new EScript::Number(GUI::PROPERTY_TAB_BODY_SHAPE));
 	declareConstant(lib,"PROPERTY_TOOLTIP_FONT",new EScript::Number(GUI::PROPERTY_TOOLTIP_FONT));
 	declareConstant(lib,"PROPERTY_TOOLTIP_TEXT_COLOR",new EScript::Number(GUI::PROPERTY_TOOLTIP_TEXT_COLOR));
