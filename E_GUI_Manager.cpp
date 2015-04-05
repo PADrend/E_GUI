@@ -404,12 +404,17 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 												parameter[1].to<Util::Color4ub>(rt),
 												parameter[2].to<bool>(rt))))
 
-	//! [ESMF]  Shape GUI_Manager.s( Color4  color)
+	//! [ESMF]  Shape GUI_Manager._createOuterRectShadowShape( float top,float bottom, float left, float right,,Color4 _color)
+	ES_FUN(typeObject,"_createOuterRectShadowShape",5,5,
+			new E_AbstractShape( new OuterRectShadowShape( parameter[0].toFloat(), parameter[1].toFloat(),
+												parameter[2].toFloat(), parameter[3].toFloat(),parameter[4].to<Util::Color4ub>(rt))))
+
+	//! [ESMF]  Shape GUI_Manager._createTriangleSelectorShape( Color4 color)
 	ES_FUN(typeObject,"_createTriangleSelectorShape",1,1,
 			new E_AbstractShape( new TriangleSelectorShape( parameter[0].to<Util::Color4ub>(rt))))
 
 
-	//! [ESMF]  Shape GUI_Manager.Rounded3dRectShape( Color4?  _bgColor,Color4? _lineColor,bool blend,float _roundnessTL=2,float _roundnessTR=2,float _roundnessBL=2,float _roundnessBR=2)
+	//! [ESMF]  Shape GUI_Manager._createRounded3dRectShape( Color4?  _bgColor,Color4? _lineColor,bool blend,float _roundnessTL=2,float _roundnessTR=2,float _roundnessBL=2,float _roundnessBR=2)
 	ES_FUN(typeObject,"_createRounded3dRectShape",3,7,
 			new E_AbstractShape( new Rounded3dRectShape( parameter[0].to<Util::Color4ub>(rt),
 												parameter[1].to<Util::Color4ub>(rt),

@@ -155,6 +155,7 @@ void init(EScript::Namespace * globals) {
 	declareConstant(lib,"NO_RESIZE_PANEL",new EScript::Number(GUI::Window::NO_RESIZE_PANEL));
 	declareConstant(lib,"HIDDEN_WINDOW",new EScript::Number(GUI::Window::HIDDEN_WINDOW));
 	declareConstant(lib,"ONE_TIME_WINDOW",new EScript::Number(GUI::Window::ONE_TIME_WINDOW));
+	declareConstant(lib,"SNAP_TO_BORDER",new EScript::Number(GUI::Window::SNAP_TO_BORDER));
 
 	/// TextStyles
 	declareConstant(lib,"TEXT_ALIGN_LEFT",Number::create(GUI::Draw::TEXT_ALIGN_LEFT));
@@ -183,6 +184,7 @@ void init(EScript::Namespace * globals) {
 	declareConstant(lib,"PROPERTY_LISTVIEW_DEFAULT_ENTRY_HEIGHT",new EScript::Number(GUI::PROPERTY_LISTVIEW_DEFAULT_ENTRY_HEIGHT));
 	declareConstant(lib,"PROPERTY_LISTVIEW_MARKED_ENTRY_SHAPE",new EScript::Number(GUI::PROPERTY_LISTVIEW_MARKED_ENTRY_SHAPE));
 	declareConstant(lib,"PROPERTY_MENU_SHAPE",new EScript::Number(GUI::PROPERTY_MENU_SHAPE));
+	declareConstant(lib,"PROPERTY_MENU_OUTER_SHAPE",new EScript::Number(GUI::PROPERTY_MENU_OUTER_SHAPE));
 	declareConstant(lib,"PROPERTY_MENU_TEXT_COLOR",new EScript::Number(GUI::PROPERTY_MENU_TEXT_COLOR));
 	declareConstant(lib,"PROPERTY_KEY_REPEAT_DELAY_1",new EScript::Number(GUI::PROPERTY_KEY_REPEAT_DELAY_1));
 	declareConstant(lib,"PROPERTY_KEY_REPEAT_DELAY_2",new EScript::Number(GUI::PROPERTY_KEY_REPEAT_DELAY_2));
@@ -216,7 +218,9 @@ void init(EScript::Namespace * globals) {
 	declareConstant(lib,"PROPERTY_WINDOW_ACTIVE_SHAPE",new EScript::Number(GUI::PROPERTY_WINDOW_ACTIVE_SHAPE));
 	declareConstant(lib,"PROPERTY_WINDOW_BORDER_SIZE",new EScript::Number(GUI::PROPERTY_WINDOW_BORDER_SIZE));
 	declareConstant(lib,"PROPERTY_WINDOW_BUTTON_SHAPE",new EScript::Number(GUI::PROPERTY_WINDOW_BUTTON_SHAPE));
+	declareConstant(lib,"PROPERTY_WINDOW_ACTIVE_OUTER_SHAPE",new EScript::Number(GUI::PROPERTY_WINDOW_ACTIVE_OUTER_SHAPE));
 	declareConstant(lib,"PROPERTY_WINDOW_PASSIVE_SHAPE",new EScript::Number(GUI::PROPERTY_WINDOW_PASSIVE_SHAPE));
+	declareConstant(lib,"PROPERTY_WINDOW_PASSIVE_OUTER_SHAPE",new EScript::Number(GUI::PROPERTY_WINDOW_PASSIVE_OUTER_SHAPE));
 	declareConstant(lib,"PROPERTY_WINDOW_RESIZER_SHAPE",new EScript::Number(GUI::PROPERTY_WINDOW_RESIZER_SHAPE));
 	declareConstant(lib,"PROPERTY_WINDOW_TITLE_COLOR",new EScript::Number(GUI::PROPERTY_WINDOW_TITLE_COLOR));
 	declareConstant(lib,"PROPERTY_WINDOW_TITLE_FONT",new EScript::Number(GUI::PROPERTY_WINDOW_TITLE_FONT));
