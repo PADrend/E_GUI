@@ -38,6 +38,8 @@ class E_GUI_Manager : public EScript::ExtObject {
 	ES_PROVIDES_TYPE_NAME(GUI_Manager)
 
 	public:
+		static E_GUI_Manager* getEObj(GUI::GUI_Manager*);
+		
 		E_GUI_Manager(Util::UI::EventContext & eventContext, EScript::Runtime & rt,EScript::Type * type=nullptr);
 
 		static EScript::Type* typeObject;
@@ -62,5 +64,6 @@ class E_GUI_Manager : public EScript::ExtObject {
 
 ES_CONV_EOBJ_TO_OBJ(E_GUI::E_GUI_Manager,		GUI::GUI_Manager*,		**eObj)
 ES_CONV_EOBJ_TO_OBJ(E_GUI::E_GUI_Manager,		GUI::GUI_Manager&,		***eObj)
+ES_CONV_OBJ_TO_EOBJ(GUI::GUI_Manager*,			E_GUI::E_GUI_Manager,	E_GUI::E_GUI_Manager::getEObj(obj))
 
 #endif // E_GUI_MANAGER_H

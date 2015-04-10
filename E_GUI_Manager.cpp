@@ -570,12 +570,27 @@ bool E_GUI_Manager_EventHandler::onKeyEvent(GUI::Component * component, const Ut
 
 // --------------------------------------------------------------------------
 
+Util::StringIdentifier ATTR_ESCRIPT_OBJECT("_EScriptObject");
+
+//! (static)
+E_GUI_Manager* E_GUI_Manager::getEObj(GUI::GUI_Manager* guiManager){
+	E_GUI_Manager* eGuiManager = nullptr;
+	if(guiManager){
+		auto* attr = guiManager->userData.getAttribute<Util::WrapperAttribute<E_GUI_Manager*>>(ATTR_ESCRIPT_OBJECT);
+		if(attr)
+			eGuiManager = attr->get();
+	}
+	return eGuiManager;
+}
+ 
 //! (ctor)
 E_GUI_Manager::E_GUI_Manager(Util::UI::EventContext & eventContext, EScript::Runtime & rt,EScript::Type * type):
-	ExtObject(type ? type : typeObject),
-	manager(new GUI::GUI_Manager(eventContext)),
-	eventHandler(new E_GUI_Manager_EventHandler(rt, *this)) {
+		ExtObject(type ? type : typeObject),
+		manager(new GUI::GUI_Manager(&eventContext)),
+		eventHandler(new E_GUI_Manager_EventHandler(rt, *this)) {
+	manager->userData.setAttribute(ATTR_ESCRIPT_OBJECT, new Util::WrapperAttribute<E_GUI_Manager*>(this));
 	_initAttributes(rt);
+	
 }
 
 //! (dtor)

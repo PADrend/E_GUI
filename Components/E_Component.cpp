@@ -10,16 +10,19 @@
 */
 #include "E_Component.h"
 
-#include <EScript/EScript.h>
 #include <GUI/Components/Container.h>
 #include <GUI/Components/ComponentHoverPropertyFeature.h>
+#include <GUI/GUI_Manager.h>
 #include <E_Geometry/E_Vec2.h>
 #include <E_Geometry/E_Rect.h>
 #include <E_Util/E_Utils.h>
 #include "../ELibGUI.h"
+#include "../E_GUI_Manager.h"
 #include "../Base/E_AbstractShape.h"
 #include "../Base/E_Layouters.h"
 #include "../Base/E_Properties.h"
+
+#include <EScript/EScript.h>
 
 using namespace E_Geometry;
 
@@ -85,6 +88,9 @@ void E_Component::init(EScript::Namespace & lib) {
 
 	//! [ESMF] bool Component.getFlag(int)
 	ES_MFUN(typeObject,const Component,"getFlag",1,1,(thisObj->getFlag(parameter[0].to<int32_t>(rt))))
+
+	//! [ESMF] GUI_Manager Component.getGUI()
+	ES_MFUN(typeObject,const Component,"getGUI",0,0,&thisObj->getGUI())
 
 	//! [ESMF] Number Component.getHeight()
 	ES_MFUN(typeObject,const Component,"getHeight",0,0,(thisObj->getHeight()))
