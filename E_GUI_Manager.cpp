@@ -594,8 +594,7 @@ E_GUI_Manager::E_GUI_Manager(Util::UI::EventContext & eventContext, EScript::Run
 		manager(new GUI::GUI_Manager(&eventContext)),
 		eventHandler(new E_GUI_Manager_EventHandler(rt, *this)) {
 	manager->userData.setAttribute(ATTR_ESCRIPT_OBJECT, new Util::WrapperAttribute<E_GUI_Manager*>(this));
-	_initAttributes(rt);
-	
+
 }
 
 //! (dtor)
