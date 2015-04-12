@@ -87,10 +87,13 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 
 	using namespace GUI;
 
-	//! [ESF] GUI_Manager new GUI.GUI_Manager(EventContext)
-	ES_CONSTRUCTOR(typeObject, 1, 1, {
-		Util::UI::EventContext & eventContext = **EScript::assertType<E_Util::E_UI::E_EventContext>(rt, parameter[0]);
-		return new E_GUI_Manager(eventContext, rt);
+	//! [ESF] GUI_Manager new GUI.GUI_Manager( [EventContext] )
+	ES_CONSTRUCTOR(typeObject, 0, 1, {
+		if(parameter.count()==0)
+			return new E_GUI_Manager(nullptr,rt);
+		else{
+			return new E_GUI_Manager(&**EScript::assertType<E_Util::E_UI::E_EventContext>(rt, parameter[0]), rt);
+		}
 	})
 
 	//! [ESMF] void GUI_Manager.enableMouseButtonListener(Component)
@@ -589,9 +592,9 @@ E_GUI_Manager* E_GUI_Manager::getEObj(GUI::GUI_Manager* guiManager){
 }
  
 //! (ctor)
-E_GUI_Manager::E_GUI_Manager(Util::UI::EventContext & eventContext, EScript::Runtime & rt,EScript::Type * type):
+E_GUI_Manager::E_GUI_Manager(Util::UI::EventContext * eventContext, EScript::Runtime & rt,EScript::Type * type):
 		ExtObject(type ? type : typeObject),
-		manager(new GUI::GUI_Manager(&eventContext)),
+		manager(new GUI::GUI_Manager(eventContext)),
 		eventHandler(new E_GUI_Manager_EventHandler(rt, *this)) {
 	manager->userData.setAttribute(ATTR_ESCRIPT_OBJECT, new Util::WrapperAttribute<E_GUI_Manager*>(this));
 

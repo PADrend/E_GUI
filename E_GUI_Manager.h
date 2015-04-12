@@ -40,7 +40,7 @@ class E_GUI_Manager : public EScript::ExtObject {
 	public:
 		static E_GUI_Manager* getEObj(GUI::GUI_Manager*);
 		
-		E_GUI_Manager(Util::UI::EventContext & eventContext, EScript::Runtime & rt,EScript::Type * type=nullptr);
+		E_GUI_Manager(Util::UI::EventContext * eventContext, EScript::Runtime & rt,EScript::Type * type=nullptr);
 
 		static EScript::Type* typeObject;
 		static void init(EScript::Namespace & lib);
