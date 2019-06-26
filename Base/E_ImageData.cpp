@@ -46,7 +46,7 @@ void E_ImageData::init(EScript::Namespace & lib) {
 	ES_MFUN(typeObject,ImageData,"getBitmap",0,0,			EScript::create(thisObj->getBitmap()))
 
 	//! [ESMF] self ImageData.removeGLData()
-	ES_MFUN(typeObject,ImageData,"removeGLData",0,0,		(thisObj->removeGLData(),thisEObj))
+	//ES_MFUN(typeObject,ImageData,"removeGLData",0,0,		(thisObj->removeGLData(),thisEObj))
 
 	//! [ESMF] self ImageData.updateData(Util::Bitmap)
 	ES_MFUN(typeObject,ImageData,"updateData",1,1,			(thisObj->updateData(parameter[0].to<Util::Bitmap &>(rt)),thisEObj))

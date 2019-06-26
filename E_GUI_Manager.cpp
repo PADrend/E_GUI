@@ -31,6 +31,7 @@
 #include <E_Util/UI/E_Event.h>
 #include <E_Util/UI/E_EventContext.h>
 #include <E_Util/UI/E_Window.h>
+#include <E_Rendering/E_RenderingContext.h>
 #include <Util/IO/FileName.h>
 #include <Util/UI/Event.h>
 #include <functional>
@@ -276,8 +277,8 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 	//! [ESMF] GUI_Manager.disableLazyRendering( )
 	ES_MFUN(typeObject,GUI_Manager,"disableLazyRendering",0,0,(thisObj->disableLazyRendering(),thisEObj))
 			
-	//! [ESMF] serl GUI_Manager.display()
-	ES_MFUN(typeObject,GUI_Manager,"display",0,0,(thisObj->display(),thisEObj))
+	//! [ESMF] serl GUI_Manager.display(RenderingContext rt)
+	ES_MFUN(typeObject,GUI_Manager,"display",1,1,(thisObj->display(parameter[0].to<Rendering::RenderingContext&>(rt)),thisEObj))
 
 	//! [ESMF] GUI_Manager.enableLazyRendering( )
 	ES_MFUN(typeObject,GUI_Manager,"enableLazyRendering",0,0,(thisObj->enableLazyRendering(),thisEObj))

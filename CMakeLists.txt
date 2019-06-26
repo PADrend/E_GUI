@@ -87,6 +87,18 @@ if(NOT TARGET Util)
 endif()
 target_link_libraries(E_GUI LINK_PUBLIC Util)
 
+# Dependency to E_Rendering
+if(NOT TARGET E_Rendering)
+	find_package(E_Rendering 0.2.0 REQUIRED NO_MODULE)
+endif()
+target_link_libraries(E_GUI LINK_PUBLIC E_Rendering)
+
+# Dependency to Util
+if(NOT TARGET Rendering)
+	find_package(Rendering 0.2.0 REQUIRED NO_MODULE)
+endif()
+target_link_libraries(E_GUI LINK_PUBLIC Rendering)
+
 # Set version of library
 set_target_properties(E_GUI PROPERTIES VERSION ${E_GUI_VERSION}
                                        SOVERSION ${E_GUI_VERSION_MAJOR})
