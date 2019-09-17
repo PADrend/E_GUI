@@ -89,13 +89,13 @@ target_link_libraries(E_GUI LINK_PUBLIC Util)
 
 # Dependency to E_Rendering
 if(NOT TARGET E_Rendering)
-	find_package(E_Rendering 0.2.0 REQUIRED NO_MODULE)
+	find_package(E_Rendering 0.3.0 REQUIRED NO_MODULE)
 endif()
 target_link_libraries(E_GUI LINK_PUBLIC E_Rendering)
 
 # Dependency to Util
 if(NOT TARGET Rendering)
-	find_package(Rendering 0.2.0 REQUIRED NO_MODULE)
+	find_package(Rendering 0.3.0 REQUIRED NO_MODULE)
 endif()
 target_link_libraries(E_GUI LINK_PUBLIC Rendering)
 
