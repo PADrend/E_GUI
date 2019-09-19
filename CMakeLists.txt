@@ -87,9 +87,23 @@ if(NOT TARGET Util)
 endif()
 target_link_libraries(E_GUI LINK_PUBLIC Util)
 
+# Dependency to E_Rendering
+if(NOT TARGET E_Rendering)
+	find_package(E_Rendering 0.3.0 REQUIRED NO_MODULE)
+endif()
+target_link_libraries(E_GUI LINK_PUBLIC E_Rendering)
+
+# Dependency to Util
+if(NOT TARGET Rendering)
+	find_package(Rendering 0.3.0 REQUIRED NO_MODULE)
+endif()
+target_link_libraries(E_GUI LINK_PUBLIC Rendering)
+
 # Set version of library
 set_target_properties(E_GUI PROPERTIES VERSION ${E_GUI_VERSION}
-                                       SOVERSION ${E_GUI_VERSION_MAJOR})
+																			 SOVERSION ${E_GUI_VERSION_MAJOR}
+																			 POSITION_INDEPENDENT_CODE ON
+																			 LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
 
 # Install the header files
 file(GLOB E_GUI_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/Base/Fonts/*.h")
@@ -110,9 +124,9 @@ install(TARGETS E_GUI EXPORT LibraryExport
 
 # Set include directories for users of this library
 target_include_directories(E_GUI
-                           INTERFACE
-                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/..>"
-                           "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>")
+													 INTERFACE
+													 "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/..>"
+													 "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/${CMAKE_INSTALL_INCLUDEDIR}>")
 
 # Library export
 install(EXPORT LibraryExport DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR} FILE E_GUITargets.cmake COMPONENT developmentlibraries)
@@ -120,17 +134,17 @@ install(EXPORT LibraryExport DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR} FILE E_
 # Create the configuration files
 include(CMakePackageConfigHelpers)
 configure_package_config_file(E_GUIConfig.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/E_GUIConfig.cmake
-                              INSTALL_DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR}
-                              PATH_VARS CMAKE_INSTALL_CMAKECONFIGDIR
-                              NO_SET_AND_CHECK_MACRO
-                              NO_CHECK_REQUIRED_COMPONENTS_MACRO)
+															INSTALL_DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR}
+															PATH_VARS CMAKE_INSTALL_CMAKECONFIGDIR
+															NO_SET_AND_CHECK_MACRO
+															NO_CHECK_REQUIRED_COMPONENTS_MACRO)
 write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/E_GUIConfigVersion.cmake
-                                 VERSION ${E_GUI_VERSION}
-                                 COMPATIBILITY SameMajorVersion)
+																 VERSION ${E_GUI_VERSION}
+																 COMPATIBILITY SameMajorVersion)
 
 # Install the configuration files
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/E_GUIConfig.cmake ${CMAKE_CURRENT_BINARY_DIR}/E_GUIConfigVersion.cmake
-        DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR} COMPONENT developmentlibraries)
+				DESTINATION ${CMAKE_INSTALL_CMAKECONFIGDIR} COMPONENT developmentlibraries)
 
 # Packaging
 include(InstallRequiredSystemLibraries)
