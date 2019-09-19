@@ -278,7 +278,11 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 	ES_MFUN(typeObject,GUI_Manager,"disableLazyRendering",0,0,(thisObj->disableLazyRendering(),thisEObj))
 			
 	//! [ESMF] serl GUI_Manager.display(RenderingContext rt)
+#ifdef GUI_BACKEND_RENDERING
 	ES_MFUN(typeObject,GUI_Manager,"display",1,1,(thisObj->display(parameter[0].to<Rendering::RenderingContext&>(rt)),thisEObj))
+#else // GUI_BACKEND_RENDERING
+	ES_MFUN(typeObject,GUI_Manager,"display",0,0,(thisObj->display(),thisEObj))
+#endif // GUI_BACKEND_RENDERING
 
 	//! [ESMF] GUI_Manager.enableLazyRendering( )
 	ES_MFUN(typeObject,GUI_Manager,"enableLazyRendering",0,0,(thisObj->enableLazyRendering(),thisEObj))
