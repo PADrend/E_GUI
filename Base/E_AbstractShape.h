@@ -26,12 +26,12 @@ class E_AbstractShape :  public EScript::ReferenceObject<Util::Reference<GUI::Ab
 	ES_PROVIDES_TYPE_NAME(AbstractShape)
 	public:
 		// ----
-		static EScript::Type* typeObject;
-		static void init(EScript::Namespace & lib);
+		EGUIAPI static EScript::Type* typeObject;
+		EGUIAPI static void init(EScript::Namespace & lib);
 
 
-		E_AbstractShape(GUI::AbstractShape * c,EScript::Type * type=nullptr);
-		virtual ~E_AbstractShape();
+		EGUIAPI E_AbstractShape(GUI::AbstractShape * c,EScript::Type * type=nullptr);
+		EGUIAPI virtual ~E_AbstractShape();
 
 };
 }

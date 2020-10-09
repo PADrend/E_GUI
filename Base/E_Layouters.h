@@ -31,7 +31,7 @@ class E_AbstractLayouter : public EScript::ReferenceObject<Util::Reference<GUI::
 	//!	@name AbstractLayouter -> E_AbstractLayouter
 	//	@{
 	private:
-		static E_Util::E_ObjectFactory<GUI::AbstractLayouter, E_AbstractLayouter> factorySystem;
+		EGUIAPI static E_Util::E_ObjectFactory<GUI::AbstractLayouter, E_AbstractLayouter> factorySystem;
 	protected:
 		template<class LayouterType, class E_AbstractLayouterType>
 		static void addFactory() {
@@ -47,8 +47,8 @@ class E_AbstractLayouter : public EScript::ReferenceObject<Util::Reference<GUI::
 	//	@}
 
 		// ---
-		static EScript::Type * getTypeObject();
-		static void init(EScript::Namespace & lib);
+		EGUIAPI static EScript::Type * getTypeObject();
+		EGUIAPI static void init(EScript::Namespace & lib);
 
 		E_AbstractLayouter(GUI::AbstractLayouter * p, EScript::Type* type=nullptr) : ReferenceObject_t(p,type?type:getTypeObject()) {}
 		virtual ~E_AbstractLayouter()		{}
@@ -60,7 +60,7 @@ class E_AbstractLayouter : public EScript::ReferenceObject<Util::Reference<GUI::
 class E_FlowLayouter : public E_AbstractLayouter{
 		ES_PROVIDES_TYPE_NAME(FlowLayouter)
 	public:
-		static EScript::Type * getTypeObject();
+		EGUIAPI static EScript::Type * getTypeObject();
 
 		E_FlowLayouter(GUI::FlowLayouter * p, EScript::Type* type=nullptr) : E_AbstractLayouter(p,type?type:getTypeObject()) {}
 		virtual ~E_FlowLayouter()		{}

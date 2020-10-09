@@ -32,7 +32,7 @@ class E_Textarea : public E_Component{
 		template<class, class, class> friend class Util::PolymorphicWrapperCreator;
 		E_Textarea(GUI::Textarea * c,EScript::Type * type=nullptr) : E_Component(c,type?type:getTypeObject()) {}
 	public:
-		static void init(EScript::Namespace & lib);
+		EGUIAPI static void init(EScript::Namespace & lib);
 
 		virtual ~E_Textarea() {}
 };

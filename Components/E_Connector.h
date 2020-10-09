@@ -32,7 +32,7 @@ class E_Connector : public E_Container{
 		E_Connector(GUI::Connector * c,EScript::Type * type=nullptr) : E_Container(c,type?type:getTypeObject()) {}
 		template<class, class, class> friend class Util::PolymorphicWrapperCreator;
 	public:
-		static void init(EScript::Namespace & lib);
+		EGUIAPI static void init(EScript::Namespace & lib);
 
 		virtual ~E_Connector() {}
 };

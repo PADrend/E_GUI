@@ -26,12 +26,12 @@ class E_AbstractFont :  public EScript::ReferenceObject<Util::Reference<GUI::Abs
 	ES_PROVIDES_TYPE_NAME(AbstractFont)
 	public:
 		// ----
-		static EScript::Type* typeObject;
-		static void init(EScript::Namespace & lib);
+		EGUIAPI static EScript::Type* typeObject;
+		EGUIAPI static void init(EScript::Namespace & lib);
 
 
-		E_AbstractFont(GUI::AbstractFont * c,EScript::Type * type=nullptr);
-		virtual ~E_AbstractFont();
+		EGUIAPI E_AbstractFont(GUI::AbstractFont * c,EScript::Type * type=nullptr);
+		EGUIAPI virtual ~E_AbstractFont();
 };
 }
 

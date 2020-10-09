@@ -25,11 +25,11 @@ class E_BitmapFont :  public E_AbstractFont {
 	ES_PROVIDES_TYPE_NAME(BitmapFont)
 	public:
 		// ----
-		static EScript::Type* typeObject;
-		static void init(EScript::Namespace & lib);
+		EGUIAPI static EScript::Type* typeObject;
+		EGUIAPI static void init(EScript::Namespace & lib);
 
-		E_BitmapFont(GUI::BitmapFont * c,EScript::Type * type=nullptr);
-		virtual ~E_BitmapFont();
+		EGUIAPI E_BitmapFont(GUI::BitmapFont * c,EScript::Type * type=nullptr);
+		EGUIAPI virtual ~E_BitmapFont();
 
 		GUI::BitmapFont * get() const {
 			return dynamic_cast<GUI::BitmapFont *>(E_AbstractFont::ref().get());

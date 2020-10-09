@@ -45,7 +45,7 @@ class E_Component : public EScript::ExtReferenceObject< GUI::Component::Ref,EScr
 		E_GUI_PROVIDES_TYPE_OBJ(EScript::Object)
 
 	private:
-		static E_Util::E_ObjectFactory<GUI::Component, E_Component> factorySystem;
+		EGUIAPI static E_Util::E_ObjectFactory<GUI::Component, E_Component> factorySystem;
 	protected:
 		template<class ComponentType, class E_ComponentType>
 		static void addFactory() {
@@ -60,7 +60,7 @@ class E_Component : public EScript::ExtReferenceObject< GUI::Component::Ref,EScr
 		}
 		template<class, class, class> friend class Util::PolymorphicWrapperCreator;
 
-		static void init(EScript::Namespace & lib);
+		EGUIAPI static void init(EScript::Namespace & lib);
 
 		virtual ~E_Component() {}
 

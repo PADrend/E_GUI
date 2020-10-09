@@ -32,7 +32,7 @@ class E_Button : public E_Container{
 		E_Button(GUI::Button * c,EScript::Type * type=nullptr) : E_Container(c,type?type:getTypeObject()) {}
 		template<class, class, class> friend class Util::PolymorphicWrapperCreator;
 	public:
-		static void init(EScript::Namespace & lib);
+		EGUIAPI static void init(EScript::Namespace & lib);
 
 		virtual ~E_Button() {}
 

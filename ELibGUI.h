@@ -22,7 +22,7 @@ namespace E_GUI {
 class E_Component;
 
 //LIB_EXPORT
-void init(EScript::Namespace * globals);
+EGUIAPI void init(EScript::Namespace * globals);
 
 }
 

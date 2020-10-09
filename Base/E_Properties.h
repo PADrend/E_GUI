@@ -30,7 +30,7 @@ class E_Property : public EScript::ReferenceObject<Util::Reference<GUI::DisplayP
 	//!	@name DisplayProperty -> E_Property
 	//	@{
 	private:
-		static E_Util::E_ObjectFactory<GUI::DisplayProperty, E_Property> factorySystem;
+		EGUIAPI static E_Util::E_ObjectFactory<GUI::DisplayProperty, E_Property> factorySystem;
 	protected:
 		template<class PropertyType, class E_PropertyType>
 		static void addFactory() {
@@ -46,8 +46,8 @@ class E_Property : public EScript::ReferenceObject<Util::Reference<GUI::DisplayP
 	//	@}
 
 		// ---
-		static EScript::Type * getTypeObject();
-		static void init(EScript::Namespace & lib);
+		EGUIAPI static EScript::Type * getTypeObject();
+		EGUIAPI static void init(EScript::Namespace & lib);
 
 		E_Property(GUI::DisplayProperty * p, EScript::Type* type=nullptr) : ReferenceObject_t(p,type?type:getTypeObject()) {}
 		virtual ~E_Property()	{}
@@ -59,7 +59,7 @@ class E_Property : public EScript::ReferenceObject<Util::Reference<GUI::DisplayP
 class E_ColorProperty : public E_Property{
 		ES_PROVIDES_TYPE_NAME(ColorProperty)
 	public:
-		static EScript::Type * getTypeObject();
+		EGUIAPI static EScript::Type * getTypeObject();
 
 		E_ColorProperty(GUI::ColorProperty * p, EScript::Type* type=nullptr) : E_Property(p,type?type:getTypeObject()) {}
 		virtual ~E_ColorProperty()	{}

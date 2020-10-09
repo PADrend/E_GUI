@@ -28,8 +28,8 @@ namespace E_GUI{
 class E_ImageData : public EScript::ReferenceObject<Util::Reference<GUI::ImageData> > {
 		ES_PROVIDES_TYPE_NAME(ImageData)
 	public:
-		static EScript::Type * getTypeObject();
-		static void init(EScript::Namespace & lib);
+		EGUIAPI static EScript::Type * getTypeObject();
+		EGUIAPI static void init(EScript::Namespace & lib);
 
 		E_ImageData(const Util::Reference<GUI::ImageData> & _obj) :
 				ReferenceObject_t(_obj, E_ImageData::getTypeObject()) {}

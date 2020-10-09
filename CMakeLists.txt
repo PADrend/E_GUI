@@ -51,6 +51,14 @@ add_library(E_GUI
 	ELibGUI.cpp
 )
 
+if(MSVC)
+	target_compile_definitions(E_GUI PRIVATE "EGUIAPI=__declspec(dllexport)")
+	target_compile_definitions(E_GUI INTERFACE "EGUIAPI=__declspec(dllimport)")
+else()
+	target_compile_definitions(E_GUI PRIVATE "EGUIAPI=")
+	target_compile_definitions(E_GUI INTERFACE "EGUIAPI=")
+endif()
+
 # Dependency to EScript
 if(NOT TARGET EScript)
 	find_package(EScript 0.6.7 REQUIRED NO_MODULE)

@@ -38,23 +38,23 @@ class E_GUI_Manager : public EScript::ExtObject {
 	ES_PROVIDES_TYPE_NAME(GUI_Manager)
 
 	public:
-		static E_GUI_Manager* getEObj(GUI::GUI_Manager*);
+		EGUIAPI static E_GUI_Manager* getEObj(GUI::GUI_Manager*);
 		
-		E_GUI_Manager(Util::UI::EventContext * eventContext, EScript::Runtime & rt,EScript::Type * type=nullptr);
+		EGUIAPI E_GUI_Manager(Util::UI::EventContext * eventContext, EScript::Runtime & rt,EScript::Type * type=nullptr);
 
-		static EScript::Type* typeObject;
-		static void init(EScript::Namespace & lib);
+		EGUIAPI static EScript::Type* typeObject;
+		EGUIAPI static void init(EScript::Namespace & lib);
 
-		virtual ~E_GUI_Manager();
+		EGUIAPI virtual ~E_GUI_Manager();
 		const GUI::GUI_Manager & getGUI_Manager()const	{	return *manager.get();		}
 		GUI::GUI_Manager & getGUI_Manager()				{	return *manager.get();		}
-		bool handleEvent(const Util::UI::Event & event);
-		E_GUI_Manager_EventHandler * getEventHandler();
+		EGUIAPI bool handleEvent(const Util::UI::Event & event);
+		EGUIAPI E_GUI_Manager_EventHandler * getEventHandler();
 		
 		const GUI::GUI_Manager* operator*()const		{	return manager.get();	}
 		GUI::GUI_Manager* operator*()					{	return manager.get();	}
 
-		EScript::Object * clone() const override;
+		EGUIAPI EScript::Object * clone() const override;
 
 	private:
 		std::unique_ptr<GUI::GUI_Manager> manager;

@@ -32,7 +32,7 @@ class E_Label : public E_Component{
 		template<class, class, class> friend class Util::PolymorphicWrapperCreator;
 		E_Label(GUI::Label * c,EScript::Type * type=nullptr) : E_Component(c,type?type:getTypeObject()) {}
 	public:
-		static void init(EScript::Namespace & lib);
+		EGUIAPI static void init(EScript::Namespace & lib);
 
 		virtual ~E_Label() {}
 };

@@ -32,7 +32,7 @@ class E_ListView : public E_Container{
 		template<class, class, class> friend class Util::PolymorphicWrapperCreator;
 		E_ListView(GUI::ListView * c,EScript::Type * type=nullptr) : E_Container(c,type?type:getTypeObject()) {}
 	public:
-		static void init(EScript::Namespace & lib);
+		EGUIAPI static void init(EScript::Namespace & lib);
 
 		virtual ~E_ListView() {}
 };
