@@ -18,7 +18,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include(GNUInstallDirs)
 set(CMAKE_INSTALL_CMAKECONFIGDIR ${CMAKE_INSTALL_LIBDIR}/cmake/E_GUI)
 
-add_library(E_GUI
+add_library(E_GUI SHARED
 	Base/E_AbstractShape.cpp
 	Base/E_ImageData.cpp
 	Base/E_Layouters.cpp
