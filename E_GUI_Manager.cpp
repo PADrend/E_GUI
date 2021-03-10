@@ -213,9 +213,9 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 
 	//! [ESMF] GUI_Manager.createSlider(w,h,min,max,[steps,[flags]])
 	ES_MFUNCTION(typeObject,GUI_Manager,"createSlider",4,6,{
-		float min=parameter[2].toDouble();
-		float max=parameter[3].toDouble();
-		int steps=parameter[4].toInt(parameter[0].to<uint32_t>(rt));
+		float min=parameter[2].toFloat();
+		float max=parameter[3].toFloat();
+		int steps=parameter[4].toInt(parameter[0].to<int32_t>(rt));
 
 		return EScript::create(thisObj->createSlider(
 			Geometry::Rect(0,0,parameter[0].to<float>(rt),parameter[1].to<float>(rt)),

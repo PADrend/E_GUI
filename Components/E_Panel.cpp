@@ -37,10 +37,10 @@ void E_Panel::init(EScript::Namespace & lib) {
 	ES_MFUN(typeObject,const Panel, "getContentContainer",0,0,	EScript::create(thisObj->getContentContainer()))
 
 	//! [ESMF] self Panel.nextColumn(Number)
-	ES_MFUN(typeObject,Panel,"nextColumn",0,1,				(thisObj->nextColumn(parameter[0].toInt(0)),thisEObj))
+	ES_MFUN(typeObject,Panel,"nextColumn",0,1,				(thisObj->nextColumn(parameter[0].toFloat(0.0f)),thisEObj))
 
 	//! [ESMF] self Panel.nextRow(Number)
-	ES_MFUN(typeObject,Panel,"nextRow",0,1,					(thisObj->nextRow(parameter[0].toInt(0)),thisEObj))
+	ES_MFUN(typeObject,Panel,"nextRow",0,1,					(thisObj->nextRow(parameter[0].toFloat(0.0f)),thisEObj))
 
 	//! [ESMF] self Panel.setMargin(Number)
 	ES_MFUN(typeObject,Panel,"setMargin",1,1,				(thisObj->setMargin(parameter[0].to<int32_t>(rt)),thisEObj))
