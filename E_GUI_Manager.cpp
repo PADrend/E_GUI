@@ -277,7 +277,7 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 	//! [ESMF] GUI_Manager.disableLazyRendering( )
 	ES_MFUN(typeObject,GUI_Manager,"disableLazyRendering",0,0,(thisObj->disableLazyRendering(),thisEObj))
 			
-	//! [ESMF] serl GUI_Manager.display(RenderingContext rt)
+	//! [ESMF] self GUI_Manager.display(RenderingContext rt)
 #ifdef GUI_BACKEND_RENDERING
 	ES_MFUN(typeObject,GUI_Manager,"display",1,1,(thisObj->display(parameter[0].to<Rendering::RenderingContext&>(rt)),thisEObj))
 #else // GUI_BACKEND_RENDERING
@@ -295,7 +295,10 @@ void E_GUI_Manager::init(EScript::Namespace & lib) {
 	ES_MFUN(typeObject,GUI_Manager,"getDebugMode",0,0,thisObj->getDebugMode())
 
 	//! [ESMF] Rect GUI_Manager.getScreenRect()
-	ES_MFUN(typeObject,GUI_Manager,"getScreenRect",0,0,EScript::create(thisObj->getScreenRect()))
+	ES_MFUN(typeObject,const GUI_Manager,"getScreenRect",0,0,EScript::create(thisObj->getScreenRect()))
+
+	//! [ESMF] self GUI_Manager.setScreenSize(Geometry.Vec2 size)
+	ES_MFUN(typeObject,GUI_Manager,"setScreenSize",1,1,(thisObj->setScreenSize(parameter[0].to<Geometry::Vec2>(rt)), thisEObj))
 
 	//! [ESMF] AbstractFont GUI_Manager.getDefaultFont(Number id)
 	//! \todo change the resulting type into the actual type
